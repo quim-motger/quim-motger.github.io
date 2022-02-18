@@ -2451,4 +2451,5 @@ input, select, textarea {
 	background:white;
 	padding: 16px 24px;
 	box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
+	width: 100%;
 }
