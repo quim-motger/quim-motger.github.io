@@ -2,6 +2,9 @@
     <div class="container">
         <header style="text-align: left;">
             <h2>Publications</h2>
+            <div id="publication-filters" style="display: flex; gap: 1em; margin: 2em 0; width: 100%;">
+                <!-- Filters will be added here dynamically -->
+            </div>
         </header>
         <div class="row aln-center">
             <div id="publications-list"></div>
@@ -13,155 +16,254 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <script>
-function getTypeInfo(type) {
-    switch(type.toLowerCase()) {
-        case 'article': 
-            return {
-                icon: 'fa-newspaper',
-                label: 'Journal',
-                color: '#3498db'
-            };
-        case 'inproceedings': 
-            return {
-                icon: 'fa-users',
-                label: 'Conference',
-                color: '#27ae60'
-            };
-        case 'book': 
-            return {
-                icon: 'fa-book',
-                label: 'Book',
-                color: '#8e44ad'
-            };
-        case 'incollection': 
-            return {
-                icon: 'fa-book-open',
-                label: 'Book Chapter',
-                color: '#e67e22'
-            };
-        case 'misc': 
-            return {
-                icon: 'fa-file-alt',
-                label: 'Pre-print',
-                color: '#c0392b'
-            };
-        default: 
-            return {
-                icon: 'fa-file',
-                label: 'Other',
-                color: '#7f8c8d'
-            };
-    }
-}
-
-function loadPublications() {
-    const container = document.getElementById('publications-list');
-    if (!container) {
-        console.error('Could not find publications-list element');
-        return;
-    }
-
-    fetch('../bibliography/6477.bib')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+// Only create the manager if it doesn't exist
+if (typeof window.publicationsManager === 'undefined') {
+    window.publicationsManager = (function() {
+        let isInitialized = false;
+        
+        function getTypeInfo(type) {
+            switch(type.toLowerCase()) {
+                case 'article': 
+                    return {
+                        icon: 'fa-newspaper',
+                        label: 'Journal',
+                        color: '#3498db'
+                    };
+                case 'inproceedings': 
+                    return {
+                        icon: 'fa-users',
+                        label: 'Conference',
+                        color: '#27ae60'
+                    };
+                case 'book': 
+                    return {
+                        icon: 'fa-book',
+                        label: 'Book',
+                        color: '#8e44ad'
+                    };
+                case 'incollection': 
+                    return {
+                        icon: 'fa-book-open',
+                        label: 'Book Chapter',
+                        color: '#e67e22'
+                    };
+                case 'misc': 
+                    return {
+                        icon: 'fa-file-alt',
+                        label: 'Pre-print',
+                        color: '#c0392b'
+                    };
+                default: 
+                    return {
+                        icon: 'fa-file',
+                        label: 'Other',
+                        color: '#7f8c8d'
+                    };
             }
-            return response.text();
-        })
-        .then(bibtex => {
-            try {
-                const entries = bibtexParse.toJSON(bibtex);
-                if (!entries || entries.length === 0) {
-                    throw new Error('No entries found in bibliography');
+        }
+
+        function createFilterBoxes(entries) {
+            const filtersContainer = document.getElementById('publication-filters');
+            // Clear existing filters first
+            filtersContainer.innerHTML = '';
+            
+            const typeCounts = {};
+            
+            // Count publications by type
+            entries.forEach(entry => {
+                let type = entry.entryType.toLowerCase();
+                if (type === 'article' && entry.entryTags.journal && entry.entryTags.journal.toLowerCase() === 'corr') {
+                    type = 'misc';
                 }
+                typeCounts[type] = (typeCounts[type] || 0) + 1;
+            });
 
-                // Group entries by year
-                const entriesByYear = entries.reduce((acc, entry) => {
-                    const year = entry.entryTags.year || 'Unknown';
-                    if (!acc[year]) acc[year] = [];
-                    acc[year].push(entry);
-                    return acc;
-                }, {});
-
-                // Sort years in descending order
-                const sortedYears = Object.keys(entriesByYear).sort((a, b) => b - a);
-                
-                container.innerHTML = sortedYears.map(year => {
-                    const yearEntries = entriesByYear[year];
-                    return `
-                        <div class="year-section" style="margin-bottom: 2em;">
-                            <h3 style="
-                                color: #666;
-                                border-bottom: 1px solid #ddd;
-                                padding-bottom: 0.5em;
-                                margin-bottom: 1em;
-                            ">${year}</h3>
-                            ${yearEntries.map(entry => {
-                                const e = entry.entryTags;
-                                // Check if it's a CoRR article and change type to misc (pre-print)
-                                if (entry.entryType.toLowerCase() === 'article' && e.journal && e.journal.toLowerCase() === 'corr') {
-                                    entry.entryType = 'misc';
-                                }
-                                const typeInfo = getTypeInfo(entry.entryType);
-                                const title = e.title || '';
-                                const authors = e.author || '';
-                                let venue = '';
-                                if (entry.entryType.toLowerCase() === 'article') venue = e.journal || '';
-                                else if (entry.entryType.toLowerCase() === 'inproceedings') venue = e.booktitle || '';
-                                else if (entry.entryType.toLowerCase() === 'incollection') venue = e.booktitle || '';
-                                else if (entry.entryType.toLowerCase() === 'book') venue = e.publisher || '';
-                                else if (entry.entryType.toLowerCase() === 'misc') venue = e.howpublished || 'arXiv';
-                                
-                                let link = '';
-                                if (e.url) link = e.url;
-                                else if (e.doi) link = `https://doi.org/${e.doi}`;
-                                
-                                return `
-                                    <div class="col-12" style="display: flex; align-items: stretch; margin-bottom: 1em;">
-                                        <div style="width: 150px; display: flex; justify-content: center; align-items: center;">
-                                            <div style="width: 100px; height: 100%; background: white; border-radius: 8px; border: 1px solid rgba(58, 110, 165, 0.2); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; padding: 0;">
-                                                <i class="fas ${typeInfo.icon}" style="font-size: 2em; color: ${typeInfo.color}; margin: 0; padding: 0; line-height: 1;"></i>
-                                                <span style="font-size: 0.8em; color: ${typeInfo.color}; text-align: center; margin: 0; padding: 0; line-height: 1;">${typeInfo.label}</span>
-                                            </div>
-                                        </div>
-                                        ${link ? `
-                                            <a href="${link}" target="_blank" rel="noopener" style="text-decoration: none; flex: 1;">
-                                                <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em; transition: all 0.3s ease; cursor: pointer; background: white;">
-                                                    <div>
-                                                        <p style="margin: 0; color: #333; line-height: 1.5;">
-                                                            ${authors}. <strong>${title}</strong>. ${venue}, ${year}.
-                                                        </p>
-                                                    </div>
-                                                </section>
-                                            </a>
-                                        ` : `
-                                            <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em;">
-                                                <div>
-                                                    <p style="margin: 0; color: #333; line-height: 1.5;">
-                                                        ${authors}. <strong>${title}</strong>. ${venue}, ${year}.
-                                                    </p>
-                                                </div>
-                                            </section>
-                                        `}
-                                    </div>
-                                `;
-                            }).join('')}
+            // Create filter boxes
+            const numTypes = Object.keys(typeCounts).length;
+            Object.entries(typeCounts).forEach(([type, count]) => {
+                const typeInfo = getTypeInfo(type);
+                const filterBox = document.createElement('div');
+                filterBox.className = 'filter-box active';
+                filterBox.dataset.type = type;
+                filterBox.style.flex = `1 1 ${100/numTypes}%`;
+                filterBox.innerHTML = `
+                    <div class="filter-content" style="
+                        background: white;
+                        border-radius: 8px;
+                        padding: 1.2em;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.8em;
+                        cursor: pointer;
+                        border: 1px solid rgba(58, 110, 165, 0.2);
+                        transition: all 0.3s ease;
+                        height: 100%;
+                    ">
+                        <div style="margin: 0 0.5em;">
+                            <i class="fas ${typeInfo.icon}" style="font-size: 2.5em; color: ${typeInfo.color};"></i>
                         </div>
-                    `;
-                }).join('');
-            } catch (error) {
-                console.error('Error processing bibliography:', error);
-                container.innerHTML = '<p>Error loading publications. Please try again later.</p>';
+                        <div style="display: flex; flex-direction: column;">
+                            <span style="font-size: 1.5em; font-weight: bold; color: ${typeInfo.color};">${count}</span>
+                            <span style="font-size: 1.1em; color: #666;">${typeInfo.label}</span>
+                        </div>
+                    </div>
+                `;
+                
+                filterBox.addEventListener('click', () => {
+                    filterBox.classList.toggle('active');
+                    filterPublications();
+                });
+                
+                filtersContainer.appendChild(filterBox);
+            });
+        }
+
+        function filterPublications() {
+            const activeTypes = Array.from(document.querySelectorAll('.filter-box.active')).map(box => box.dataset.type);
+            const publications = document.querySelectorAll('#publications-list .col-12');
+            
+            publications.forEach(pub => {
+                const type = pub.dataset.type;
+                if (activeTypes.includes(type)) {
+                    pub.style.display = 'flex';
+                } else {
+                    pub.style.display = 'none';
+                }
+            });
+        }
+
+        function loadPublications() {
+            // Reset initialization if the content is not loaded
+            const container = document.getElementById('publications-list');
+            if (!container || !container.innerHTML.trim()) {
+                isInitialized = false;
             }
-        })
-        .catch(error => {
-            console.error('Error fetching bibliography:', error);
-            container.innerHTML = '<p>Error loading publications. Please try again later.</p>';
-        });
+
+            if (isInitialized) return;
+            isInitialized = true;
+
+            if (!container) {
+                console.error('Could not find publications-list element');
+                return;
+            }
+
+            fetch('../bibliography/6477.bib')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(bibtex => {
+                    try {
+                        const entries = bibtexParse.toJSON(bibtex);
+                        if (!entries || entries.length === 0) {
+                            throw new Error('No entries found in bibliography');
+                        }
+
+                        // Create filter boxes first
+                        createFilterBoxes(entries);
+
+                        // Group entries by year
+                        const entriesByYear = entries.reduce((acc, entry) => {
+                            const year = entry.entryTags.year || 'Unknown';
+                            if (!acc[year]) acc[year] = [];
+                            acc[year].push(entry);
+                            return acc;
+                        }, {});
+
+                        // Sort years in descending order
+                        const sortedYears = Object.keys(entriesByYear).sort((a, b) => b - a);
+                        
+                        container.innerHTML = sortedYears.map(year => {
+                            const yearEntries = entriesByYear[year];
+                            return `
+                                <div class="year-section" style="margin-bottom: 2em;">
+                                    <h3 style="
+                                        color: #666;
+                                        border-bottom: 1px solid #ddd;
+                                        padding-bottom: 0.5em;
+                                        margin-bottom: 1em;
+                                    ">${year}</h3>
+                                    ${yearEntries.map(entry => {
+                                        const e = entry.entryTags;
+                                        // Check if it's a CoRR article and change type to misc (pre-print)
+                                        let type = entry.entryType.toLowerCase();
+                                        if (type === 'article' && e.journal && e.journal.toLowerCase() === 'corr') {
+                                            type = 'misc';
+                                        }
+                                        const typeInfo = getTypeInfo(type);
+                                        const title = e.title || '';
+                                        const authors = e.author || '';
+                                        let venue = '';
+                                        if (type === 'article') venue = e.journal || '';
+                                        else if (type === 'inproceedings') venue = e.booktitle || '';
+                                        else if (type === 'incollection') venue = e.booktitle || '';
+                                        else if (type === 'book') venue = e.publisher || '';
+                                        else if (type === 'misc') venue = e.howpublished || 'arXiv';
+                                        
+                                        let link = '';
+                                        if (e.url) link = e.url;
+                                        else if (e.doi) link = `https://doi.org/${e.doi}`;
+                                        
+                                        return `
+                                            <div class="col-12" style="display: flex; align-items: stretch; margin-bottom: 1em;" data-type="${type}">
+                                                <div style="width: 150px; display: flex; justify-content: center; align-items: center;">
+                                                    <div style="width: 100px; height: 100%; background: white; border-radius: 8px; border: 1px solid rgba(58, 110, 165, 0.2); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; padding: 0;">
+                                                        <i class="fas ${typeInfo.icon}" style="font-size: 2em; color: ${typeInfo.color}; margin: 0; padding: 0; line-height: 1;"></i>
+                                                        <span style="font-size: 0.8em; color: ${typeInfo.color}; text-align: center; margin: 0; padding: 0; line-height: 1;">${typeInfo.label}</span>
+                                                    </div>
+                                                </div>
+                                                ${link ? `
+                                                    <a href="${link}" target="_blank" rel="noopener" style="text-decoration: none; flex: 1;">
+                                                        <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em; transition: all 0.3s ease; cursor: pointer; background: white;">
+                                                            <div>
+                                                                <p style="margin: 0; color: #333; line-height: 1.5;">
+                                                                    ${authors}. <strong>${title}</strong>. ${venue}, ${year}.
+                                                                </p>
+                                                            </div>
+                                                        </section>
+                                                    </a>
+                                                ` : `
+                                                    <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em;">
+                                                        <div>
+                                                            <p style="margin: 0; color: #333; line-height: 1.5;">
+                                                                ${authors}. <strong>${title}</strong>. ${venue}, ${year}.
+                                                            </p>
+                                                        </div>
+                                                    </section>
+                                                `}
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            `;
+                        }).join('');
+                    } catch (error) {
+                        console.error('Error processing bibliography:', error);
+                        container.innerHTML = '<p>Error loading publications. Please try again later.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching bibliography:', error);
+                    container.innerHTML = '<p>Error loading publications. Please try again later.</p>';
+                });
+        }
+
+        // Return the public interface
+        return {
+            loadPublications: loadPublications
+        };
+    })();
 }
 
 // Call the function immediately
-loadPublications();
+window.publicationsManager.loadPublications();
+
+// Add event listener for page navigation
+document.addEventListener('DOMContentLoaded', function() {
+    window.publicationsManager.loadPublications();
+});
 </script>
 
 <style>
@@ -170,8 +272,25 @@ loadPublications();
 }
 #publications-list a:hover section.box.style1 p {
     color: white !important;
+    text-shadow: none !important;
 }
 #publications-list a:hover section.box.style1 strong {
     color: white !important;
+    text-shadow: none !important;
+}
+
+.filter-box .filter-content:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.filter-box:not(.active) .filter-content {
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+.filter-box:not(.active) .filter-content:hover {
+    opacity: 0.8;
+    filter: grayscale(50%);
 }
 </style>
