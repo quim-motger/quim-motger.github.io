@@ -1913,7 +1913,7 @@ input, select, textarea {
 	.box {
 		background: #fff;
 		box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
-		text-align: center;
+		text-align: left;
 		padding: 2em;
 	}
 
@@ -2452,4 +2452,48 @@ input, select, textarea {
 	padding: 16px 24px;
 	box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
 	width: 100%;
+}
+
+.bibbase_type_book {
+    display: inline-block;
+    width: 1.5em;
+    text-align: center;
+}
+.bibbase_type_book:before {
+    content: "📚";
+    font-size: 1.2em;
+}
+.bibbase_type_article {
+    display: inline-block;
+    width: 1.5em;
+    text-align: center;
+}
+.bibbase_type_article:before {
+    content: "📰";
+    font-size: 1.2em;
+}
+.bibbase_type_inproceedings {
+    display: inline-block;
+    width: 1.5em;
+    text-align: center;
+}
+.bibbase_type_inproceedings:before {
+    content: "🎤";
+    font-size: 1.2em;
+}
+.bibbase_type_misc {
+    display: inline-block;
+    width: 1.5em;
+    text-align: center;
+}
+.bibbase_type_misc:before {
+    content: "📝";
+    font-size: 1.2em;
+}
+
+#publications-list {
+    margin-top: 1em;
+}
+#publications-list div {
+    /* Add your custom styles here */
 }

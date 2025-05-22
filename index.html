@@ -10,349 +10,200 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="https://cdn.jsdelivr.net/gh/ORCID/bibtexParseJs/bibtexParse.js"></script>
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+			}
+			#wrapper {
+				display: flex;
+				min-height: 100vh;
+			}
+			#sidebar {
+				width: 250px;
+				background: #2c3e50;
+				color: white;
+				padding: 20px;
+				position: fixed;
+				height: 100vh;
+				overflow-y: auto;
+				margin: 0;
+				top: 0;
+			}
+			#sidebar .profile {
+				text-align: center;
+				margin-bottom: 30px;
+			}
+			#sidebar .profile img {
+				width: 120px;
+				height: 120px;
+				border-radius: 50%;
+				margin-bottom: 10px;
+			}
+			#sidebar .profile h2 {
+				color: white;
+				margin: 0;
+			}
+			#sidebar ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			#sidebar ul li {
+				margin-bottom: 10px;
+			}
+			#sidebar ul li a {
+				color: white;
+				text-decoration: none;
+				display: flex;
+				align-items: center;
+				padding: 10px;
+				border-radius: 5px;
+				transition: background 0.3s;
+			}
+			#sidebar ul li a i {
+				margin-right: 10px;
+				width: 20px;
+				text-align: center;
+			}
+			#sidebar ul li a:hover {
+				background: #34495e;
+			}
+			#sidebar ul li a.active {
+				background: #3498db;
+			}
+			#main-content {
+				flex: 1;
+				margin-left: 250px;
+				padding: 0;
+			}
+			.content-section {
+				display: none;
+			}
+			.content-section.active {
+				display: block;
+			}
+			@media screen and (max-width: 768px) {
+				#wrapper {
+					flex-direction: column;
+				}
+				#sidebar {
+					width: 100%;
+					height: auto;
+					position: relative;
+				}
+				#main-content {
+					margin-left: 0;
+				}
+			}
+		</style>
 	</head>
 	<body class="is-preload">
-
-		<!-- Nav -->
-			<nav id="nav">
-				<ul class="container">
-					<li><a href="#top">Home</a></li>
-					<li><a href="#work">Education</a></li>
-					<li><a href="#teaching">Teaching</a></li>
-					<li><a href="#portfolio">Research</a></li>
-					<li><a href="#publications">Publications</a></li>
-					<li><a href="#conferences">Conferences</a></li>
-					<li><a href="#prizes">Prizes</a></li>
-					<li><a href="#contact">Contact</a></li>
+		<div id="wrapper">
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<div class="profile">
+					<img src="images/profile-pic.jpg" alt="Quim Motger" style="margin-top: 40px;"/>
+					<h3 style="color: white; margin-bottom: 60px;">Quim Motger</h3>
+				</div>
+				<ul>
+					<li><a href="#home" class="active" data-section="home"><i class="fas fa-home"></i>Home</a></li>
+					<li><a href="#education" data-section="education"><i class="fas fa-graduation-cap"></i>Education</a></li>
+					<li><a href="#teaching" data-section="teaching"><i class="fas fa-chalkboard-teacher"></i>Teaching</a></li>
+					<li><a href="#research" data-section="research"><i class="fas fa-flask"></i>Research</a></li>
+					<li><a href="#publications" data-section="publications"><i class="fas fa-book"></i>Publications</a></li>
+					<li><a href="#conferences" data-section="conferences"><i class="fas fa-users"></i>Conferences</a></li>
+					<li><a href="#prizes" data-section="prizes"><i class="fas fa-trophy"></i>Prizes</a></li>
+					<li><a href="#contact" data-section="contact"><i class="fas fa-envelope"></i>Contact</a></li>
 				</ul>
-			</nav>
+			</div>
 
-		<!-- Home -->
-			<article id="top" class="wrapper style1">
-				<div class="container">
-					<div class="row">
-						<div class="col-4 col-5-large col-12-medium">
-							<span class="image fit"><img src="images/profile-pic.jpg" alt="" /></span>
-						</div>
-						<div class="col-8 col-7-large col-12-medium">
-							<header>
-								<h1><strong>Quim Motger</strong></h1>
-							</header>
-							<p>I am a post-doctoral researcher at the <a href="https://gessi.upc.edu/en">Software and Service Engineering Research Group</a> (GESSI), from <a href="https://www.upc.edu/en?set_language=en">Universitat Politècnica de Catalunya</a> (BarcelonaTech). My research is focused on the field of natural language processing applied to requirements engineering for document analysis and feedback gathering.</p>
-							<a href="#work" class="button large scrolly">About me</a>
-						</div>
-					</div>
-				</div>
-			</article>
-
-		<!-- Education -->
-			<article id="work" class="wrapper style2">
-				<div class="container">
-					<header>
-						<h2>Education</h2>
-						<!--p>Odio turpis amet sed consequat eget posuere consequat.</p-->
-					</header>
-					<div class="row aln-center">
-						<div class="col-4 col-6-medium col-12-small">
-							<section class="box style1">
-								<!--span class="icon featured fa-comments"></span-->
-								<img src="images/upc.gif" width=60% style="margin-bottom: 16px">
-								<h3>Bachelor's Degree in Informatics Engineering</h3>
-								<p>Major in Software Engineering</p>
-							</section>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<section class="box style1">
-								<!--span class="icon solid featured fa-camera-retro"></span-->
-								<img src="images/uoc.png" width=34% style="margin-bottom: 16px">
-								<h3>Master's Degree in Computer Science</h3>
-								<p>Major in Artificial Intelligence</p>
-							</section>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<section class="box style1">
-								<!--span class="icon featured fa-comments"></span-->
-								<img src="images/upc.gif" width=60% style="margin-bottom: 16px">
-								<h3>PhD in Computing</h3>
-								<p>Natural language processing methods for document-based requirements specification and validation tasks</p>
-							</section>
-						</div>
-					</div>
-					<footer>
-						<a href="#teaching" class="button large scrolly">Teaching</a>
-					</footer>
-				</div>
-			</article>
-			
-		<!-- Teaching -->
-			<article id="teaching" class="wrapper style2">
-				<div class="container">
-					<header>
-						<h2>Teaching</h2>
-						<!--p>Odio turpis amet sed consequat eget posuere consequat.</p-->
-					</header>
-					
-					<div class="row aln-center">
-						<div class="col-4 col-6-medium col-12-small">
-							<section class="box style1">
-								<!--span class="icon featured fa-comments"></span-->
-								<img src="images/upc.gif" width=60% style="margin-bottom: 16px">
-								<h3>Bachelor's Degree in Informatics Engineering</h3>
-								<ul style="text-align:left">
-									<li>Web Applications and Services (<a href="https://www.fib.upc.edu/en/studies/bachelors-degrees/bachelor-degree-informatics-engineering/curriculum/syllabus/ASW">ASW</a>)
-									</li>
-									<li>Databases (<a href="https://www.fib.upc.edu/en/studies/bachelors-degrees/bachelor-degree-informatics-engineering/curriculum/syllabus/BD">BD</a>)
-									</li>
-								</ul>
-							</section>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<section class="box style1">
-								<!--span class="icon featured fa-comments"></span-->
-								<img src="images/upc.gif" width=60% style="margin-bottom: 16px">
-								<h3>Bachelor's Degree in Data Science and Engineering</h3>
-								<ul style="text-align:left">
-									<li>Databases (<a href="https://www.fib.upc.edu/en/studies/bachelors-degrees/bachelor-degree-data-science-and-engineering/curriculum/syllabus/BD-GCED">BD</a>)
-									</li>
-								</ul>
-							</section>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<section class="box style1">
-								<!--span class="icon featured fa-comments"></span-->
-								<img src="images/upc.gif" width=60% style="margin-bottom: 16px">
-								<h3>Master's Degree in Telecommunications Engineering</h3>
-								<ul style="text-align:left">
-									<li>Automotive Embedded Systems (<a href="http://www.etsetb.upc.edu/documents/guia_docent/assignatures/all/ang/230707.pdf">AES</a>)
-									</li>
-								</ul>
-							</section>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<section class="box style1">
-								<!--span class="icon solid featured fa-camera-retro"></span-->
-								<img src="images/uoc.png" width=34% style="margin-bottom: 16px">
-								<h3>Bachelor's Degree in Computer Science</h3>
-								<ul style="text-align:left;">
-									<li>Object-Oriented Design (<a href="https://estudios.uoc.edu/es/asignaturas-libres/asignatura/informatica-multimedia-telecomunicacion/dise%C3%B1o-programacion-orientada-objeto/presentacion">DPOO</a>)</li>
-									</li>
-								</ul>
-							</section>
-						</div>
-					</div>
-					<footer>
-						<a href="#portfolio" class="button large scrolly">Research</a>
-					</footer>
-				</div>
-			</article>
-
-
-		<!-- Portfolio -->
-			<article id="portfolio" class="wrapper style3">
-				<div class="container">
-					<header>
-						<h2>Research projects</h2>
-						<!--p>Proin odio consequat  sapien vestibulum consequat lorem dolore feugiat.</p-->
-					</header>
-					<div class="row">
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://www.essi.upc.edu/~riscoss.eu/"><img src="images/riscoss.jpg" alt="" width=80%/></a>
-								<h3><a href="https://www.essi.upc.edu/~riscoss.eu/">RISCOSS</a></h3>
-								<h6>(2015 - 2016)</h6>
-								<p>Managing Risk and Cost in Open Source Software Projects. Horizon 2020 program from the European Commission.</p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://gessi.upc.edu/en/projects/past-fp7-and-h2020-research-projects/supersede-h2020"><img src="images/supersede.png" alt="" width=45%/></a>
-								<h3><a href="https://gessi.upc.edu/en/projects/past-fp7-and-h2020-research-projects/supersede-h2020">SUPERSEDE</a></h3>
-								<h6>(2016 - 2017)</h6>
-								<p>SUpporting evolution and adaptation of PERsonalized Software by Exploiting contextual Data and End-user feedback. Horizon 2020 program from the European Commission.</p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://gessi.upc.edu/en/projects/project-pages/reactive-plan"><img src="images/replan.png" alt="" width=100% style="margin-bottom: 21px"/></a>
-								<h3><a href="https://gessi.upc.edu/en/projects/project-pages/reactive-plan">Reactive Plan</a></h3>
-								<h6>(2017 - 2018)</h6>
-								<p>Reactive Plan: A Tool for Continuous Software Release Planning. Knowledge Industry Grants for 2020.</p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://openreq.eu/" ><img src="images/openreq.png" alt="" width=80% style="margin-top:16px; margin-bottom: 16px"/></a>
-								<h3><a href="https://openreq.eu/">OpenReq</a></h3>
-								<h6>(2018 - 2020)</h6>
-								<p>Intelligent Recommendation & Decision Technologies for Community-Driven Requirements Engineering. Horizon 2020 program from the European Commission.</p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://dogo4ml.upc.edu/" ><img src="images/DOGO4ML.png" alt="" width=80% style="margin-top:16px; margin-bottom: 16px"/></a>
-								<h3><a href="#">DOGO4ML</a></h3>
-								<h6>(2021 - 2025)</h6>
-								<p>Development, Operation and Data Governance for ML-based Software Systems. Spanish Ministerio de Ciencia e Innovación.<br/></p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://hivemind-project.eu/" ><img src="images/HIVEMIND.png" alt="" width=80% style="margin-top:16px; margin-bottom: 16px"/></a>
-								<h3><a href="#">HIVEMIND</a></h3>
-								<h6>(2025 - 2027)</h6>
-								<p>Human-centred collaboratIVE MultI-ageNtframework for accelerating software Developmentand maintenance. Horizon Europe.<br/></p>
-							</article>
-						</div>
-						<!--div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
-								<h3><a href="#">Feugiat aliquam</a></h3>
-								<p>Ornare nulla proin odio consequat.</p>
-							</article>
-						</div-->
-					</div>
-					<footer>
-						<!--p>Lorem ipsum dolor sit sapien vestibulum ipsum primis?</p-->
-						<a href="#publications" class="button large scrolly">Publications</a>
-					</footer>
-				</div>
-			</article>
-			
-		<!-- Portfolio -->
-			<article id="publications" class="wrapper style3">
-				<div class="container">
-					<header>
-						<h2>Publications</h2>
-						<!--p>Proin odio consequat  sapien vestibulum consequat lorem dolore feugiat.</p-->
-					</header>
-					<div class="row">
-						<section class="box style1"  style="text-align: left !important" >
-						<script src="https://bibbase.org/show?bib=https://dblp.org/pid/242/6477.bib&noBootstrap=1&jsonp=1"></script>
-						</section>
-					</div>
-					<footer>
-						<!--p>Lorem ipsum dolor sit sapien vestibulum ipsum primis?</p-->
-						<a href="#conferences" class="button large scrolly">Conferences</a>
-					</footer>
-				</div>
-			</article>
-		
-		<!-- Conferences -->
-			<article id="conferences" class="wrapper style3">
-				<div class="container">
-					<header>
-						<h2>Conferences</h2>
-						<!--p>Proin odio consequat  sapien vestibulum consequat lorem dolore feugiat.</p-->
-					</header>
-					<div class="row">
-						<p class="publication"><b>Proceedings Co-Chair</b>. <a href="https://conf.researchr.org/home/re-2025">33rd International Requirements Engineering Conference (RE 2025)</a></p>
-						<p class="publication"><b>Local Co-Chair</b>. <a href="https://2025.refsq.org/">31st International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2024)</a></p>
-						<p class="publication"><b>Background Organization</b>. <a href="https://2024.refsq.org/">30th International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2024)</a></p>
-						<p class="publication"><b>Background Organization / Web Chair</b>. <a href="https://2023.refsq.org/">29th International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2023)</a></p>
-						<p class="publication"><b>Background Organization</b>. <a href="https://2022.refsq.org/">28th International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2022)</a></p>
-						<p class="publication"><b>Publicity Co-Chair</b>. <a href="https://www.rcis-conf.com/rcis2022/">16th International Conference on Research Challenges in Information Science (RCIS 2022)</a></p>
-						<p class="publication"><b>Student Volunteer</b>. <a href="https://re20.org/">28th IEEE International Requirements Engineering Conference (RE 2020)</a></p>
-					</div>
-					<footer>
-						<!--p>Lorem ipsum dolor sit sapien vestibulum ipsum primis?</p-->
-						<a href="#prizes" class="button large scrolly">Prizes</a>
-					</footer>
-				</div>
-			</article>
-		
-		<!-- Prizes -->
-			<article id="prizes" class="wrapper style3">
-				<div class="container">
-					<header>
-						<h2>Prizes</h2>
-						<!--p>Proin odio consequat  sapien vestibulum consequat lorem dolore feugiat.</p-->
-					</header>
-					<div class="row">
-						<p class="publication"><b>Best posters & tools award.</b> RE-Miner 2.0: A Holistic Framework for Mining Mobile Application Reviews. M Tiessler, Q Motger. REFSQ-2025 Posters & Tools Track</p>
-						<p class="publication"><b>Best poster award.</b> TransFeatEx: a NLP pipeline for feature extraction. A Gallego, J Motger, X Franch, J Marco. REFSQ-2023 Posters & Tools Track</p>
-						<p class="publication"><b>Extraordinary Award for the best academic record</b> of the University Master's Degree in Computer Engineering - Universitat Oberta de Catalunya</p>
-					</div>
-					<footer>
-						<!--p>Lorem ipsum dolor sit sapien vestibulum ipsum primis?</p-->
-						<a href="#contact" class="button large scrolly">Contact</a>
-					</footer>
-				</div>
-			</article>
-
-		<!-- Contact -->
-			<article id="contact" class="wrapper style4">
-				<div class="container medium">
-					<header>
-						<h2>Contact information</h2>
-						<!--p>Ornare nulla proin odio consequat sapien vestibulum ipsum.</p-->
-					</header>
-					<div class="row">
-						<!--div class="col-12">
-							<form method="post" action="#">
-								<div class="row">
-									<div class="col-6 col-12-small">
-										<input type="text" name="name" id="name" placeholder="Name" />
-									</div>
-									<div class="col-6 col-12-small">
-										<input type="text" name="email" id="email" placeholder="Email" />
-									</div>
-									<div class="col-12">
-										<input type="text" name="subject" id="subject" placeholder="Subject" />
-									</div>
-									<div class="col-12">
-										<textarea name="message" id="message" placeholder="Message"></textarea>
-									</div>
-									<div class="col-12">
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" /></li>
-											<li><input type="reset" value="Clear Form" class="alt" /></li>
-										</ul>
-									</div>
-								</div>
-							</form>
-						</div-->
-						<div class="col-12">
-							<hr />
-							<!--h3>Find me on ...</h3-->
-							<ul class="social">
-								<li><a href="mailto:joaquim.motger@upc.edu" class="icon regular fa-envelope"><span class="label">e-mail</span></a></li>
-								<li><a href="https://twitter.com/quimmotger" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-								<!--li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li-->
-								<!--li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li-->
-								<li><a href="https://es.linkedin.com/in/quim-motger-de-la-encarnaci%C3%B3n-5aa764103" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-								<!--li><a href="#" class="icon brands fa-tumblr"><span class="label">Tumblr</span></a></li-->
-								<!--li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li-->
-								<li><a href="https://github.com/quim-motger/" class="icon brands fa-github"><span class="label">Github</span></a></li>
-								<!--
-								<li><a href="#" class="icon solid fa-rss"><span>RSS</span></a></li>
-								<li><a href="#" class="icon brands fa-instagram"><span>Instagram</span></a></li>
-								<li><a href="#" class="icon brands fa-foursquare"><span>Foursquare</span></a></li-->
-								<li><a href="mailto:quim.motger@gmail.com" class="icon brands fa-skype"><span class="label">Skype</span></a></li>
-								<!--li><a href="#" class="icon brands fa-soundcloud"><span>Soundcloud</span></a></li>
-								<li><a href="#" class="icon brands fa-youtube"><span>YouTube</span></a></li>
-								<li><a href="#" class="icon brands fa-blogger"><span>Blogger</span></a></li>
-								<li><a href="#" class="icon brands fa-flickr"><span>Flickr</span></a></li>
-								<li><a href="#" class="icon brands fa-vimeo"><span>Vimeo</span></a></li>
-								-->
-							</ul>
-							<hr />
-						</div>
-					</div>
-					<footer>
-						<ul id="copyright">
-							<li>&copy; Quim Motger. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
-					</footer>
-				</div>
-			</article>
+			<!-- Main Content -->
+			<div id="main-content">
+				<div id="content-container"></div>
+			</div>
+		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				const contentContainer = document.getElementById('content-container');
+				const menuLinks = document.querySelectorAll('#sidebar a[data-section]');
+				
+				// Function to load content
+				async function loadContent(section) {
+					try {
+						const response = await fetch(`pages/${section}.html`);
+						if (!response.ok) throw new Error('Failed to load content');
+						const content = await response.text();
+						contentContainer.innerHTML = content;
+						
+						// Execute any scripts in the loaded content
+						const scripts = contentContainer.getElementsByTagName('script');
+						for (let script of scripts) {
+							const newScript = document.createElement('script');
+							if (script.src) {
+								newScript.src = script.src;
+							} else {
+								newScript.textContent = script.textContent;
+							}
+							script.parentNode.replaceChild(newScript, script);
+						}
 
+						// If we're loading the publications page, call loadPublications
+						if (section === 'publications') {
+							if (typeof loadPublications === 'function') {
+								loadPublications();
+							}
+						}
+					} catch (error) {
+						console.error('Error loading content:', error);
+						contentContainer.innerHTML = '<p>Error loading content. Please try again.</p>';
+					}
+				}
+				
+				// Add click event listener to each menu link
+				menuLinks.forEach(link => {
+					link.addEventListener('click', function(e) {
+						e.preventDefault();
+						
+						// Remove active class from all links
+						menuLinks.forEach(l => l.classList.remove('active'));
+						
+						// Add active class to clicked link
+						this.classList.add('active');
+						
+						// Load content
+						const section = this.getAttribute('data-section');
+						loadContent(section);
+						
+						// Update URL hash
+						window.location.hash = section;
+					});
+				});
+				
+				// Handle initial page load with hash
+				if (window.location.hash) {
+					const section = window.location.hash.substring(1);
+					const link = document.querySelector(`a[data-section="${section}"]`);
+					if (link) {
+						link.click();
+					} else {
+						// If no valid hash, load home page
+						loadContent('home');
+					}
+				} else {
+					// Load home page by default
+					loadContent('home');
+				}
+			});
+		</script>
 	</body>
 </html>
