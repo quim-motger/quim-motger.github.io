@@ -126,7 +126,7 @@ function loadPublications() {
                                         </div>
                                         ${link ? `
                                             <a href="${link}" target="_blank" rel="noopener" style="text-decoration: none; flex: 1;">
-                                                <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.background='#3a6ea5'; this.querySelector('p').style.color='white'; this.querySelector('p').style.textShadow='none';" onmouseout="this.style.background=''; this.querySelector('p').style.color='#333';">
+                                                <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em; transition: all 0.3s ease; cursor: pointer; background: white;">
                                                     <div>
                                                         <p style="margin: 0; color: #333; line-height: 1.5;">
                                                             ${authors}. <strong>${title}</strong>. ${venue}, ${year}.
@@ -163,3 +163,15 @@ function loadPublications() {
 // Call the function immediately
 loadPublications();
 </script>
+
+<style>
+#publications-list a:hover section.box.style1 {
+    background-color: #3a6ea5 !important;
+}
+#publications-list a:hover section.box.style1 p {
+    color: white !important;
+}
+#publications-list a:hover section.box.style1 strong {
+    color: white !important;
+}
+</style>
