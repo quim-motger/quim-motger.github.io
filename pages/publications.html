@@ -19,37 +19,37 @@ function getTypeInfo(type) {
             return {
                 icon: 'fa-newspaper',
                 label: 'Journal',
-                color: '#3498db'  // Changed to a nice blue
+                color: '#3498db'
             };
         case 'inproceedings': 
             return {
                 icon: 'fa-users',
                 label: 'Conference',
-                color: '#27ae60'  // Green
+                color: '#27ae60'
             };
         case 'book': 
             return {
                 icon: 'fa-book',
                 label: 'Book',
-                color: '#8e44ad'  // Purple
+                color: '#8e44ad'
             };
         case 'incollection': 
             return {
                 icon: 'fa-book-open',
                 label: 'Book Chapter',
-                color: '#e67e22'  // Orange
+                color: '#e67e22'
             };
         case 'misc': 
             return {
                 icon: 'fa-file-alt',
                 label: 'Pre-print',
-                color: '#c0392b'  // Red
+                color: '#c0392b'
             };
         default: 
             return {
                 icon: 'fa-file',
                 label: 'Other',
-                color: '#7f8c8d'  // Gray
+                color: '#7f8c8d'
             };
     }
 }
@@ -113,8 +113,8 @@ function loadPublications() {
                                 else if (entry.entryType.toLowerCase() === 'misc') venue = e.howpublished || 'arXiv';
                                 
                                 let link = '';
-                                if (e.url) link = `<a href="${e.url}" target="_blank" rel="noopener">[link]</a>`;
-                                else if (e.doi) link = `<a href="https://doi.org/${e.doi}" target="_blank" rel="noopener">[doi]</a>`;
+                                if (e.url) link = e.url;
+                                else if (e.doi) link = `https://doi.org/${e.doi}`;
                                 
                                 return `
                                     <div class="col-12" style="display: flex; align-items: stretch; margin-bottom: 1em;">
@@ -124,13 +124,25 @@ function loadPublications() {
                                                 <span style="font-size: 0.8em; color: ${typeInfo.color}; text-align: center; margin: 0; padding: 0; line-height: 1;">${typeInfo.label}</span>
                                             </div>
                                         </div>
-                                        <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em;">
-                                            <div>
-                                                <p style="margin: 0; color: #333; line-height: 1.5;">
-                                                    ${authors}. <strong>${title}</strong>. ${venue}, ${year}. ${link}
-                                                </p>
-                                            </div>
-                                        </section>
+                                        ${link ? `
+                                            <a href="${link}" target="_blank" rel="noopener" style="text-decoration: none; flex: 1;">
+                                                <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.background='#3a6ea5'; this.querySelector('p').style.color='white'; this.querySelector('p').style.textShadow='none';" onmouseout="this.style.background=''; this.querySelector('p').style.color='#333';">
+                                                    <div>
+                                                        <p style="margin: 0; color: #333; line-height: 1.5;">
+                                                            ${authors}. <strong>${title}</strong>. ${venue}, ${year}.
+                                                        </p>
+                                                    </div>
+                                                </section>
+                                            </a>
+                                        ` : `
+                                            <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em;">
+                                                <div>
+                                                    <p style="margin: 0; color: #333; line-height: 1.5;">
+                                                        ${authors}. <strong>${title}</strong>. ${venue}, ${year}.
+                                                    </p>
+                                                </div>
+                                            </section>
+                                        `}
                                     </div>
                                 `;
                             }).join('')}
