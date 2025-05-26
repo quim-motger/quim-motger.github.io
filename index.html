@@ -11,6 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<script src="https://cdn.jsdelivr.net/gh/ORCID/bibtexParseJs/bibtexParse.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 		<style>
 			body {
 				margin: 0;
@@ -30,6 +31,7 @@
 				overflow-y: auto;
 				margin: 0;
 				top: 0;
+				transition: transform 0.3s ease;
 			}
 			#sidebar .profile {
 				text-align: center;
@@ -84,23 +86,108 @@
 			.content-section.active {
 				display: block;
 			}
+
+			/* Mobile menu styles */
+			.mobile-header {
+				display: none;
+				background: #2c3e50;
+				padding: 10px 20px;
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 1000;
+				align-items: center;
+			}
+
+			.mobile-header .profile-img {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+			}
+
+			.mobile-header .name {
+				color: white;
+				margin: 0;
+				flex-grow: 1;
+				text-align: center;
+			}
+
+			.mobile-header .menu-toggle {
+				color: white;
+				font-size: 16px;
+				cursor: pointer;
+				background: none;
+				border: none;
+				padding: 0;
+				width: 20%;
+				text-align: center;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				transition: opacity 0.2s ease;
+				padding: 4px 0px;
+			}
+
+			.mobile-header .menu-toggle:hover {
+				opacity: 0.8;
+			}
+
+			.mobile-header .menu-toggle i {
+				width: 24px;
+				height: 24px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 1.5rem;
+			}
+
 			@media screen and (max-width: 768px) {
-				#wrapper {
-					flex-direction: column;
+				.mobile-header {
+					display: flex;
 				}
+
 				#sidebar {
+					transform: translateX(-100%);
 					width: 100%;
-					height: auto;
-					position: relative;
+					z-index: 999;
 				}
+
+				#sidebar.active {
+					transform: translateX(0);
+				}
+
 				#main-content {
 					margin-left: 0;
+					margin-top: 60px;
+				}
+
+				#sidebar .profile {
+					display: none;
+				}
+
+				#sidebar ul {
+					margin-top: 80px;
+				}
+
+				#sidebar ul li a {
+					padding: 15px;
+					font-size: 18px;
 				}
 			}
 		</style>
 	</head>
 	<body class="is-preload">
 		<div id="wrapper">
+			<!-- Mobile Header -->
+			<div class="mobile-header">
+				<img src="images/profile-pic.jpg" alt="Quim Motger" class="profile-img"/>
+				<h3 class="name">Quim Motger</h3>
+				<button class="menu-toggle">
+					<i class="fas fa-bars"></i>
+				</button>
+			</div>
+
 			<!-- Sidebar -->
 			<div id="sidebar">
 				<div class="profile">
@@ -136,6 +223,8 @@
 			document.addEventListener('DOMContentLoaded', function() {
 				const contentContainer = document.getElementById('content-container');
 				const menuLinks = document.querySelectorAll('#sidebar a[data-section]');
+				const menuToggle = document.querySelector('.menu-toggle');
+				const sidebar = document.getElementById('sidebar');
 				
 				// Function to load content
 				async function loadContent(section) {
@@ -163,6 +252,11 @@
 								loadPublications();
 							}
 						}
+
+						// Close mobile menu after clicking a link
+						if (window.innerWidth <= 768) {
+							sidebar.classList.remove('active');
+						}
 					} catch (error) {
 						console.error('Error loading content:', error);
 						contentContainer.innerHTML = '<p>Error loading content. Please try again.</p>';
@@ -187,6 +281,11 @@
 						// Update URL hash
 						window.location.hash = section;
 					});
+				});
+
+				// Toggle mobile menu
+				menuToggle.addEventListener('click', function() {
+					sidebar.classList.toggle('active');
 				});
 				
 				// Handle initial page load with hash

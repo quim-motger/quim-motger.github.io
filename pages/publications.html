@@ -293,4 +293,29 @@ document.addEventListener('DOMContentLoaded', function() {
     opacity: 0.8;
     filter: grayscale(50%);
 }
+
+/* Add responsive styles */
+@media screen and (max-width: 768px) {
+    /* Hide the publication type boxes on the left */
+    .col-12 > div:first-child {
+        display: none !important;
+    }
+    
+    /* Hide the top filter bar */
+    #publication-filters {
+        display: none !important;
+    }
+    
+    /* Adjust the publication boxes to take full width */
+    .col-12 {
+        padding: 0 !important;
+        margin-bottom: 1em !important;
+    }
+    
+    /* Adjust the box margins */
+    .box.style1 {
+        margin: 0 !important;
+        margin-left: 1em !important;
+    }
+}
 </style>

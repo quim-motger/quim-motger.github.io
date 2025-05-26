@@ -63,4 +63,25 @@
 .metric-box:hover p {
     color: white !important;
 }
+
+/* Mobile responsive styles */
+@media screen and (max-width: 768px) {
+    .row:first-child .col-4:first-child {
+        display: none; /* Only hide the profile picture on mobile */
+    }
+    
+    .col-8 {
+        width: 100% !important; /* Make text take full width on mobile */
+    }
+    
+    .row:last-child .col-4 {
+        width: 100% !important; /* Make metric boxes take full width on mobile */
+        margin-bottom: 20px; /* Add some spacing between boxes */
+    }
+
+    .metric-box {
+        min-height: 200px !important; /* Reduce height on mobile */
+        margin: 0 10px; /* Add some horizontal margin */
+    }
+}
 </style> 

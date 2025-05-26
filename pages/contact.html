@@ -12,9 +12,9 @@
         </div>
 
         <div class="row aln-center">
-            <div class="col-4">
+            <div class="col-4 col-12-medium">
                 <a href="mailto:joaquim.motger@upc.edu" class="contact-box" style="text-decoration: none; display: block;">
-                    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; height: 350px; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease;">
+                    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease;">
                         <i class="fas fa-graduation-cap" style="font-size: 2.5em; color: #3498db; margin-bottom: 15px;"></i>
                         <h3 style="color: #2c3e50; margin-bottom: 10px;">Students</h3>
                         <p style="color: #2c3e50; margin-bottom: 20px;">Interested in BSc or MSc thesis opportunities? I'm always looking for motivated students to work on exciting research projects in requirements engineering and NLP.</p>
@@ -22,9 +22,9 @@
                     </div>
                 </a>
             </div>
-            <div class="col-4">
+            <div class="col-4 col-12-medium">
                 <a href="mailto:joaquim.motger@upc.edu" class="contact-box" style="text-decoration: none; display: block;">
-                    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; height: 350px; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease;">
+                    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease;">
                         <i class="fas fa-flask" style="font-size: 2.5em; color: #3498db; margin-bottom: 15px;"></i>
                         <h3 style="color: #2c3e50; margin-bottom: 10px;">Researchers</h3>
                         <p style="color: #2c3e50; margin-bottom: 20px;">Looking to collaborate on research projects? Let's explore potential partnerships in requirements engineering, NLP, or related fields.</p>
@@ -32,9 +32,9 @@
                     </div>
                 </a>
             </div>
-            <div class="col-4">
+            <div class="col-4 col-12-medium">
                 <a href="mailto:joaquim.motger@upc.edu" class="contact-box" style="text-decoration: none; display: block;">
-                    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; height: 350px; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease;">
+                    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease;">
                         <i class="fas fa-handshake" style="font-size: 2.5em; color: #3498db; margin-bottom: 15px;"></i>
                         <h3 style="color: #2c3e50; margin-bottom: 10px;">Industry</h3>
                         <p style="color: #2c3e50; margin-bottom: 20px;">Interested in academic-industry collaboration? Let's discuss how we can work together to bridge research and practice.</p>
@@ -72,6 +72,7 @@
 <style>
 .contact-box {
     cursor: pointer;
+    margin-bottom: 20px;
 }
 
 .contact-box:hover div {
@@ -84,4 +85,11 @@
 .contact-box:hover p {
     color: white !important;
 }
-</style> 
+
+@media screen and (max-width: 736px) {
+    .col-12-medium {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+</style>
