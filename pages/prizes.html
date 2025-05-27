@@ -65,16 +65,61 @@
 
 <style>
     @media screen and (max-width: 768px) {
-        .trophy-icon {
-            display: none !important;
-        }
         .col-12 {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            background: white !important;
+            border: 1px solid rgba(58, 110, 165, 0.1) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03) !important;
+            padding: 1.2em 1.2em 1.2em 1.2em !important;
+            margin-bottom: 2em !important;
+            margin-left: 24px !important;
+            margin-right: 8px !important;
+        }
+        .trophy-icon {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
             padding: 0 !important;
-            margin-bottom: 1em !important;
+            box-sizing: border-box !important;
+        }
+        .trophy-icon > div {
+            width: 100% !important;
+            max-width: 350px !important;
+            height: auto !important;
+            margin: 0 auto !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            background: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+        .trophy-icon i {
+            font-size: 2.5em !important;
         }
         .box.style1 {
             margin: 0 !important;
-            margin-left: 1em !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            border-radius: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        header[style] {
+            margin-left: 8px !important;
+            margin-right: 8px !important;
+        }
+        .container {
+            padding-left: 8px !important;
+            padding-right: 8px !important;
         }
     }
 </style> 
