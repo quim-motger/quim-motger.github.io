@@ -192,6 +192,7 @@ if (typeof window.publicationsManager === 'undefined') {
                                         if (type === 'article' && e.journal && e.journal.toLowerCase() === 'corr') {
                                             type = 'misc';
                                         }
+                                        console.log(entry)
                                         const typeInfo = getTypeInfo(type);
                                         const title = e.title || '';
                                         const authors = e.author || '';
