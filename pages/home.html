@@ -145,9 +145,9 @@
             if (earliestYear) {
                 const currentYear = new Date().getFullYear();
                 const years = currentYear - earliestYear;
-                document.getElementById('teaching-years').textContent = years;
+                document.getElementById('teaching-years').textContent = years + '+';
             } else {
-                document.getElementById('teaching-years').textContent = '7';
+                document.getElementById('teaching-years').textContent = '7+';
             }
         } catch (error) {
             console.error('Error calculating teaching years:', error);
