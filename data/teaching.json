@@ -43,25 +43,25 @@
         "name": "Automotive Embedded Systems",
         "code": "AES",
         "url": "http://www.etsetb.upc.edu/documents/guia_docent/assignatures/all/ang/230707.pdf",
-        "semesters": ["2023-2", "2022-2", "2021-2"]
-      }
-    ]
-  },
-  {
-    "logo": "images/uoc.png",
-    "title": "Bachelor's Degree in Telecommunications Technologies and Services Engineering",
-    "courses": [
-      {
-        "name": "Object-Oriented Design",
-        "code": "DPOO",
-        "url": "https://estudios.uoc.edu/es/asignaturas-libres/asignatura/informatica-multimedia-telecomunicacion/dise%C3%B1o-programacion-orientada-objeto/presentacion",
-        "semesters": ["2022-1", "2021-2", "2020-2", "2020-1"]
+        "semesters": ["2025-1", "2023-2", "2022-2", "2021-2"]
       }
     ]
   },
   {
     "logo": "images/uoc.png",
     "title": "Bachelor's Degree in Software Applications",
+    "courses": [
+      {
+        "name": "Object-Oriented Design",
+        "code": "DPOO",
+        "url": "https://estudios.uoc.edu/es/asignaturas-libres/asignatura/informatica-multimedia-telecomunicacion/dise%C3%B1o-programacion-orientada-objeto/presentacion",
+        "semesters": ["2025-1","2023-2","2023-1","2022-1", "2021-2", "2020-2", "2020-1"]
+      }
+    ]
+  },
+  {
+    "logo": "images/uoc.png",
+    "title": "Bachelor's Degree in Telecommunications Technologies and Services Engineering",
     "courses": [
       {
         "name": "Object-Oriented Design",
