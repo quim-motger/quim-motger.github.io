@@ -1,0 +1,73 @@
+[
+  {
+    "year": 2026,
+    "conferences": [
+      {
+        "image": "images/RE2026.png",
+        "url": "https://conf.researchr.org/home/re-2026",
+        "description": "<strong>Publicity</strong> Chair. 34th International Requirements Engineering Conference (RE 2026)"
+      }
+    ]
+  },
+  {
+    "year": 2025,
+    "conferences": [
+      {
+        "image": "images/RE2025.png",
+        "url": "https://conf.researchr.org/home/re-2025",
+        "description": "<strong>Proceedings</strong> Co-Chair. 33rd International Requirements Engineering Conference (RE 2025)"
+      },
+      {
+        "image": "images/REFSQ2025.png",
+        "url": "https://2025.refsq.org/",
+        "description": "<strong>Local</strong> Co-Chair and <strong>Background</strong> Organization. 31st International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2025)"
+      }
+    ]
+  },
+  {
+    "year": 2024,
+    "conferences": [
+      {
+        "image": "images/REFSQ2024.png",
+        "url": "https://2024.refsq.org/",
+        "description": "<strong>Background</strong> Organization. 30th International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2024)"
+      }
+    ]
+  },
+  {
+    "year": 2023,
+    "conferences": [
+      {
+        "image": "images/REFSQ2023.png",
+        "url": "https://2023.refsq.org/",
+        "description": "<strong>Background</strong> Organization and <strong>Web</strong> Chair. 29th International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2023)"
+      }
+    ]
+  },
+  {
+    "year": 2022,
+    "conferences": [
+      {
+        "image": "images/REFSQ2022.png",
+        "url": "https://2022.refsq.org/",
+        "description": "<strong>Background</strong> Organization. 28th International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2022)"
+      },
+      {
+        "image": "images/RCIS2022.png",
+        "url": "https://www.rcis-conf.com/rcis2022/",
+        "description": "<strong>Publicity</strong> Co-Chair. 16th International Conference on Research Challenges in Information Science (RCIS 2022)"
+      }
+    ]
+  },
+  {
+    "year": 2020,
+    "conferences": [
+      {
+        "image": "images/RE2020.png",
+        "url": "https://re20.org/",
+        "description": "<strong>Student Volunteer</strong>. 28th IEEE International Requirements Engineering Conference (RE 2020)"
+      }
+    ]
+  }
+]
+

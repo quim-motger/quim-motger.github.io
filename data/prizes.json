@@ -1,0 +1,27 @@
+[
+  {
+    "year": 2025,
+    "prizes": [
+      {
+        "description": "<strong>Best posters & tools award</strong>. RE-Miner 2.0: A Holistic Framework for Mining Mobile Application Reviews. Max Tiessler and Quim Motger. REFSQ-2025 Posters & Tools Track"
+      }
+    ]
+  },
+  {
+    "year": 2023,
+    "prizes": [
+      {
+        "description": "<strong>Best poster award</strong>. TransFeatEx: a NLP pipeline for feature extraction. Agustí Gallego, Quim Motger, Xavier Franch, Jordi Marco. REFSQ-2023 Posters & Tools Track"
+      }
+    ]
+  },
+  {
+    "year": 2022,
+    "prizes": [
+      {
+        "description": "<strong>Extraordinary Award for the best academic record</strong> of the University Master's Degree in Computer Engineering - Universitat Oberta de Catalunya"
+      }
+    ]
+  }
+]
+

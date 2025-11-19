@@ -11,7 +11,7 @@
                 <header>
                     <h1><strong>Quim Motger</strong></h1>
                 </header>
-                <p style="color: #333333; text-align:justify">I am an assistant professor (<em>professor lector</em>) at the <a href="https://www.essi.upc.edu/en">Department of Service and Information System Engineering</a> (ESSI) and a member of the <a href="https://gessi.upc.edu/en">Software and Service Engineering Research Group</a> (GESSI), from <a href="https://www.upc.edu/en?set_language=en">Universitat Politècnica de Catalunya</a> (UPC-BarcelonaTech). My research is focused on the field of requirements engineering, natural language processing, knowledge graphs and AI-based systems.</p>
+                <p style="color: #333333; text-align:justify">I am an assistant professor (<em>professor lector</em>) at the <a href="https://www.essi.upc.edu/en">Department of Service and Information System Engineering</a> (ESSI) and a member of the <a href="https://gessi.upc.edu/en">Software and Service Engineering Research Group</a> (GESSI), from <a href="https://www.upc.edu/en?set_language=en">Universitat Politècnica de Catalunya</a> (UPC-BarcelonaTech). My research is focused on the field of requirements engineering, natural language processing, agentic systems and knowledge graphs.</p>
                 <p style="color: #333333; text-align:justify">I graduated with a BSc in Informatics Engineering from Universitat Politècnica de Catalunya (UPC) in 2017 and a MSc in Informatics Engineering from Universitat Oberta de Catalunya (UOC) in 2020. I completed my PhD cum laude in Computing from Universitat Politècnica de Catalunya. During my PhD, I did a 4-month research stay at the Istituto di Linguistica Computazionale "Antonio Zampolli" del Consiglio Nazionale delle Ricerche (Pisa, Italy).</p>
             </div>
         </div>
@@ -22,7 +22,7 @@
                     <div class="metric-box" style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease; cursor: pointer;">
                         <i class="fas fa-book" style="font-size: 2.5em; color: #3498db; margin-bottom: 15px; transition: all 0.3s ease;"></i>
                         <h3 style="color: #333333; margin-bottom: 10px; transition: all 0.3s ease;">Publications</h3>
-                        <div class="metric-number" style="font-size: 2em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; transition: all 0.3s ease;">20+</div>
+                        <div id="publications-count" class="metric-number" style="font-size: 2em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; transition: all 0.3s ease;">...</div>
                         <p style="color: #333333; margin: 0; transition: all 0.3s ease;">Including book chapters, journal papers, and conference papers.</p>
                     </div>
                 </a>
@@ -32,7 +32,7 @@
                     <div class="metric-box" style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease; cursor: pointer;">
                         <i class="fas fa-project-diagram" style="font-size: 2.5em; color: #3498db; margin-bottom: 15px; transition: all 0.3s ease;"></i>
                         <h3 style="color: #333333; margin-bottom: 10px; transition: all 0.3s ease;">Projects</h3>
-                        <div class="metric-number" style="font-size: 2em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; transition: all 0.3s ease;">7</div>
+                        <div id="projects-count" class="metric-number" style="font-size: 2em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; transition: all 0.3s ease;">...</div>
                         <p style="color: #333333; margin: 0; transition: all 0.3s ease;">Including European, national (Spanish) and regional (Catalan) research projects.</p>
                     </div>
                 </a>
@@ -41,9 +41,9 @@
                 <a href="#" onclick="document.querySelector('a[data-section=\'teaching\']').click(); return false;" style="text-decoration: none;">
                     <div class="metric-box" style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease; cursor: pointer;">
                         <i class="fas fa-graduation-cap" style="font-size: 2.5em; color: #3498db; margin-bottom: 15px; transition: all 0.3s ease;"></i>
-                        <h3 style="color: #333333; margin-bottom: 10px; transition: all 0.3s ease;">Supervision</h3>
-                        <div class="metric-number" style="font-size: 2em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; transition: all 0.3s ease;">10</div>
-                        <p style="color: #333333; margin: 0; transition: all 0.3s ease;">Including BSc and MSc theses co-advised</p>
+                        <h3 style="color: #333333; margin-bottom: 10px; transition: all 0.3s ease;">Teaching</h3>
+                        <div id="teaching-years" class="metric-number" style="font-size: 2em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; transition: all 0.3s ease;">...</div>
+                        <p style="color: #333333; margin: 0; transition: all 0.3s ease;">Years of teaching experience in various degrees at UPC-BarcelonaTech and UOC.</p>
                     </div>
                 </a>
             </div>
@@ -84,4 +84,87 @@
         margin: 0 10px; /* Add some horizontal margin */
     }
 }
-</style> 
+</style>
+
+<script>
+    // Function to count publications from bibliography.bib
+    async function countPublications() {
+        try {
+            const response = await fetch('../data/bibliography.bib');
+            if (!response.ok) {
+                throw new Error('Failed to load bibliography');
+            }
+            const bibtex = await response.text();
+            // Count entries by counting lines that start with @
+            const entries = bibtex.match(/^@\w+/gm);
+            const count = entries ? entries.length : 0;
+            document.getElementById('publications-count').textContent = count;
+        } catch (error) {
+            console.error('Error counting publications:', error);
+            document.getElementById('publications-count').textContent = '20+';
+        }
+    }
+    
+    // Function to count projects from projects.json
+    async function countProjects() {
+        try {
+            const response = await fetch('../data/projects.json');
+            if (!response.ok) {
+                throw new Error('Failed to load projects');
+            }
+            const projects = await response.json();
+            document.getElementById('projects-count').textContent = projects.length;
+        } catch (error) {
+            console.error('Error counting projects:', error);
+            document.getElementById('projects-count').textContent = '7';
+        }
+    }
+    
+    // Function to calculate teaching years from teaching.json
+    async function calculateTeachingYears() {
+        try {
+            const response = await fetch('../data/teaching.json');
+            if (!response.ok) {
+                throw new Error('Failed to load teaching data');
+            }
+            const degrees = await response.json();
+            
+            // Find the earliest year from all semesters
+            let earliestYear = null;
+            degrees.forEach(degree => {
+                degree.courses.forEach(course => {
+                    course.semesters.forEach(semester => {
+                        const year = parseInt(semester.split('-')[0]);
+                        if (earliestYear === null || year < earliestYear) {
+                            earliestYear = year;
+                        }
+                    });
+                });
+            });
+            
+            if (earliestYear) {
+                const currentYear = new Date().getFullYear();
+                const years = currentYear - earliestYear;
+                document.getElementById('teaching-years').textContent = years;
+            } else {
+                document.getElementById('teaching-years').textContent = '7';
+            }
+        } catch (error) {
+            console.error('Error calculating teaching years:', error);
+            document.getElementById('teaching-years').textContent = '7';
+        }
+    }
+    
+    // Load all metrics when page loads
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            countPublications();
+            countProjects();
+            calculateTeachingYears();
+        });
+    } else {
+        countPublications();
+        countProjects();
+        calculateTeachingYears();
+    }
+</script> 

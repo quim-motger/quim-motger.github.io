@@ -1,0 +1,75 @@
+[
+  {
+    "logo": "images/upc.gif",
+    "title": "Bachelor's Degree in Informatics Engineering",
+    "courses": [
+      {
+        "name": "Web Applications and Services",
+        "code": "ASW",
+        "url": "https://www.fib.upc.edu/en/studies/bachelors-degrees/bachelor-degree-informatics-engineering/curriculum/syllabus/ASW",
+        "semesters": ["2025-1", "2023-2", "2022-2", "2021-2", "2020-1", "2019-1", "2019-2", "2018-2"]
+      },
+      {
+        "name": "Databases",
+        "code": "BD",
+        "url": "https://www.fib.upc.edu/en/studies/bachelors-degrees/bachelor-degree-informatics-engineering/curriculum/syllabus/BD",
+        "semesters": ["2024-1", "2021-1", "2020-1"]
+      },
+      {
+        "name": "Requirements Engineering",
+        "code": "ER",
+        "url": "https://www.fib.upc.edu/en/studies/bachelors-degrees/bachelor-degree-informatics-engineering/curriculum/syllabus/ER",
+        "semesters": ["2025-1"]
+      }
+    ]
+  },
+  {
+    "logo": "images/upc.gif",
+    "title": "Bachelor's Degree in Data Science and Engineering",
+    "courses": [
+      {
+        "name": "Databases",
+        "code": "BD",
+        "url": "https://www.fib.upc.edu/en/studies/bachelors-degrees/bachelor-degree-data-science-and-engineering/curriculum/syllabus/BD-GCED",
+        "semesters": ["2023-1", "2022-1"]
+      }
+    ]
+  },
+  {
+    "logo": "images/upc.gif",
+    "title": "Master's Degree in Telecommunications Engineering",
+    "courses": [
+      {
+        "name": "Automotive Embedded Systems",
+        "code": "AES",
+        "url": "http://www.etsetb.upc.edu/documents/guia_docent/assignatures/all/ang/230707.pdf",
+        "semesters": ["2023-2", "2022-2", "2021-2"]
+      }
+    ]
+  },
+  {
+    "logo": "images/uoc.png",
+    "title": "Bachelor's Degree in Telecommunications Technologies and Services Engineering",
+    "courses": [
+      {
+        "name": "Object-Oriented Design",
+        "code": "DPOO",
+        "url": "https://estudios.uoc.edu/es/asignaturas-libres/asignatura/informatica-multimedia-telecomunicacion/dise%C3%B1o-programacion-orientada-objeto/presentacion",
+        "semesters": ["2022-1", "2021-2", "2020-2", "2020-1"]
+      }
+    ]
+  },
+  {
+    "logo": "images/uoc.png",
+    "title": "Bachelor's Degree in Software Applications",
+    "courses": [
+      {
+        "name": "Object-Oriented Design",
+        "code": "DPOO",
+        "url": "https://estudios.uoc.edu/es/asignaturas-libres/asignatura/informatica-multimedia-telecomunicacion/dise%C3%B1o-programacion-orientada-objeto/presentacion",
+        "semesters": ["2022-1", "2021-2", "2020-2", "2020-1"]
+      }
+    ]
+  }
+]
+
