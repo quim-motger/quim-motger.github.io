@@ -1,0 +1,140 @@
+<article class="wrapper style2">
+    <div class="container">
+        <header style="text-align: left;">
+            <h2>Service</h2>
+            <p style="margin-top: 0.6em; color: #666;">Community and academic service activities.</p>
+        </header>
+        <div id="service-sections"></div>
+    </div>
+</article>
+
+<script>
+    function renderServiceSection(title, itemsHtml) {
+        return `
+            <div class="service-section">
+                <h3>${title}</h3>
+                <ul>
+                    ${itemsHtml}
+                </ul>
+            </div>
+        `;
+    }
+
+    function renderServiceData(data) {
+        const container = document.getElementById('service-sections');
+        if (!container) return;
+
+        const getSortYear = (item) => {
+            if (typeof item.year === 'number') return item.year;
+            if (typeof item.year === 'string') {
+                const parsed = parseInt(item.year, 10);
+                if (!Number.isNaN(parsed)) return parsed;
+            }
+            const match = (item.event || '').match(/\b(19|20)\d{2}\b/g);
+            return match ? parseInt(match[match.length - 1], 10) : 0;
+        };
+
+        const ocItems = [...data.organizingCommittee]
+            .sort((a, b) => {
+                const yearDiff = getSortYear(b) - getSortYear(a);
+                if (yearDiff !== 0) return yearDiff;
+                return (a.event || '').localeCompare(b.event || '');
+            })
+            .map(item => `<li>${item.role_html}. ${item.event}.</li>`)
+            .join('');
+
+        const studentItems = data.students
+            .map(item => {
+                const institution = item.institution ? ` (${item.institution})` : '';
+                return `<li><strong>${item.name}</strong>${institution} - Academic course: ${item.academic_course} - ${item.type} - ${item.supervision}.</li>`;
+            })
+            .join('');
+
+        const conferenceWorkshopItems = [...(data.conferenceWorkshopService || [])]
+            .sort((a, b) => {
+                const yearA = typeof a.year === 'number' ? a.year : 0;
+                const yearB = typeof b.year === 'number' ? b.year : 0;
+                if (yearB !== yearA) return yearB - yearA;
+                return `${a.name} ${a.acronym}`.localeCompare(`${b.name} ${b.acronym}`);
+            })
+            .map(item => {
+                const tracks = (item.tracks || []).join('; ');
+                const roles = (item.roles || []).join(', ');
+                return `<li>${item.name} (${item.acronym}), ${item.year}. Roles: ${roles}. Tracks: ${tracks}.</li>`;
+            })
+            .join('');
+
+        const journalItems = data.reviewerJournals
+            .map(item => `<li>${item}.</li>`)
+            .join('');
+
+        container.innerHTML = [
+            renderServiceSection('Organizing Committee Membership', ocItems),
+            renderServiceSection('Students Supervised / Co-Supervised', studentItems),
+            renderServiceSection('Program Committee and Reviewer - Conferences and Workshops', conferenceWorkshopItems),
+            renderServiceSection('Reviewer - Journals', journalItems),
+        ].join('');
+    }
+
+    async function loadServiceData() {
+        const container = document.getElementById('service-sections');
+        try {
+            const response = await fetch(`../data/service.json?v=${Date.now()}`, { cache: 'no-store' });
+            if (!response.ok) {
+                throw new Error('Failed to load service data');
+            }
+
+            const data = await response.json();
+            renderServiceData(data);
+        } catch (error) {
+            console.error('Error loading service data:', error);
+            if (container) {
+                container.innerHTML = '<p style="color: red; padding: 1em 0;">Error loading service data. Please try again later.</p>';
+            }
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadServiceData);
+    } else {
+        loadServiceData();
+    }
+</script>
+
+<style>
+    .service-section {
+        background: #fff;
+        border: 1px solid rgba(58, 110, 165, 0.15);
+        border-radius: 10px;
+        padding: 1.25em 1.4em;
+        margin: 0 0 1.2em 0;
+        text-align: left;
+    }
+
+    .service-section h3 {
+        margin: 0 0 0.6em 0;
+        color: #3a6ea5;
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 0.35em;
+    }
+
+    .service-section ul {
+        margin: 0;
+        padding-left: 1.2em;
+        text-align: left;
+    }
+
+    .service-section li {
+        color: #333;
+        line-height: 1.45;
+        margin-bottom: 0.3em;
+        text-align: left;
+    }
+
+    @media screen and (max-width: 768px) {
+        .service-section {
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+    }
+</style>

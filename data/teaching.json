@@ -7,7 +7,7 @@
         "name": "Web Applications and Services",
         "code": "ASW",
         "url": "https://www.fib.upc.edu/en/studies/bachelors-degrees/bachelor-degree-informatics-engineering/curriculum/syllabus/ASW",
-        "semesters": ["2025-1", "2023-2", "2022-2", "2021-2", "2020-1", "2019-1", "2019-2", "2018-2"]
+        "semesters": ["2025-2", "2025-1", "2023-2", "2022-2", "2021-2", "2020-1", "2019-1", "2019-2", "2018-2"]
       },
       {
         "name": "Databases",
@@ -19,7 +19,7 @@
         "name": "Requirements Engineering",
         "code": "ER",
         "url": "https://www.fib.upc.edu/en/studies/bachelors-degrees/bachelor-degree-informatics-engineering/curriculum/syllabus/ER",
-        "semesters": ["2025-1"]
+        "semesters": ["2025-2", "2025-1"]
       }
     ]
   },
@@ -55,7 +55,7 @@
         "name": "Object-Oriented Design",
         "code": "DPOO",
         "url": "https://estudios.uoc.edu/es/asignaturas-libres/asignatura/informatica-multimedia-telecomunicacion/dise%C3%B1o-programacion-orientada-objeto/presentacion",
-        "semesters": ["2025-1","2023-2","2023-1","2022-1", "2021-2", "2020-2", "2020-1"]
+        "semesters": ["2025-2", "2025-1", "2023-2", "2023-1", "2022-1", "2021-2", "2020-2", "2020-1"]
       }
     ]
   },

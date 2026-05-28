@@ -1,5 +1,15 @@
 [
   {
+    "year": 2027,
+    "conferences": [
+      {
+        "image": "images/REFSQ2027.jpg",
+        "url": "https://2027.refsq.org/",
+        "description": "<strong>Posters &amp; Tools</strong> Co-Chair. 33rd International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2027)"
+      }
+    ]
+  },
+  {
     "year": 2026,
     "conferences": [
       {

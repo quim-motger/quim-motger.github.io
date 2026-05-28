@@ -1,0 +1,252 @@
+{
+  "organizingCommittee": [
+    {
+      "year": 2027,
+      "role_html": "<strong>Posters &amp; Tools Co-Chair</strong>",
+      "event": "33rd International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2027)"
+    },
+    {
+      "year": 2026,
+      "role_html": "<strong>Organizing Committee</strong>",
+      "event": "Artificial Intelligence and Requirements Engineering Workshop (AIRE 2026), co-located with the IEEE International Requirements Engineering Conference (RE 2026)"
+    },
+    {
+      "year": 2026,
+      "role_html": "<strong>Organizing Committee</strong>",
+      "event": "Natural Language Processing for Requirements Engineering Workshop (NLP4RE 2026), co-located with the International Working Conference on Requirements Engineering: Foundation for Software Quality (REFSQ 2026)"
+    },
+    {
+      "year": 2025,
+      "role_html": "<strong>Organizing Committee</strong>",
+      "event": "Artificial Intelligence and Requirements Engineering Workshop (AIRE 2025), co-located with the IEEE International Requirements Engineering Conference (RE 2025)"
+    },
+    {
+      "year": 2026,
+      "role_html": "<strong>Publicity Chair</strong>",
+      "event": "34th International Requirements Engineering Conference (RE 2026)"
+    },
+    {
+      "year": 2025,
+      "role_html": "<strong>Proceedings Co-Chair</strong>",
+      "event": "33rd International Requirements Engineering Conference (RE 2025)"
+    },
+    {
+      "year": 2025,
+      "role_html": "<strong>Local Co-Chair</strong> and <strong>Background Organization</strong>",
+      "event": "31st International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2025)"
+    },
+    {
+      "year": 2024,
+      "role_html": "<strong>Background Organization</strong>",
+      "event": "30th International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2024)"
+    },
+    {
+      "year": 2023,
+      "role_html": "<strong>Background Organization</strong> and <strong>Web Chair</strong>",
+      "event": "29th International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2023)"
+    },
+    {
+      "year": 2022,
+      "role_html": "<strong>Background Organization</strong>",
+      "event": "28th International Working Conference on Requirement Engineering: Foundation for Software Quality (REFSQ 2022)"
+    },
+    {
+      "year": 2022,
+      "role_html": "<strong>Publicity Co-Chair</strong>",
+      "event": "16th International Conference on Research Challenges in Information Science (RCIS 2022)"
+    }
+  ],
+  "students": [
+    {
+      "name": "Rafael Ibanez Rodriguez",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2025-2026",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Gerard Galindo Gispert",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2025-2026",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Sergi Alonso Morillas",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2025-2026",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Laia Belaustegui Colilaf",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2025-2026",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Aina Gomez Pinyol",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2025-2026",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Matthieu Kollen",
+      "institution": "Bordeaux INP",
+      "academic_course": "2025-2026",
+      "type": "Learning agreement student (research internship)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Anyer Moreno Alcaraz",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2024-2025",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Max Tiessler",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2024-2025",
+      "type": "Learning agreement student (research internship)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Leandra Kateey Moonsammy",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2023-2024",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Joel Macias Rojas",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2023-2024",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Lucas Ares Perez",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2023-2024",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Darko Iglesias Allasio",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2023-2024",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Irene Bertolin Rico",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2023-2024",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Co-supervisor"
+    },
+    {
+      "name": "Daniel Pulido Galvez",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2022-2023",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Raul Lozano Garcia",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2022-2023",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Agusti Gallego Marfa",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2022-2023",
+      "type": "Learning agreement student (research internship)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Carla Campas Gene",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2022-2023",
+      "type": "Learning agreement student (research internship)",
+      "supervision": "Supervisor"
+    },
+    {
+      "name": "Bran Rodriguez Castro",
+      "institution": "Universitat Politècnica de Catalunya",
+      "academic_course": "2021-2022",
+      "type": "Final Thesis (BSc/MSc)",
+      "supervision": "Co-supervisor"
+    }
+  ],
+  "conferenceWorkshopService": [
+    {
+      "name": "IEEE International Requirements Engineering Conference",
+      "acronym": "RE",
+      "year": 2026,
+      "roles": ["PC Member"],
+      "tracks": ["Main Conference", "Artifact Track"]
+    },
+    {
+      "name": "International Working Conference on Requirements Engineering: Foundation for Software Quality",
+      "acronym": "REFSQ",
+      "year": 2026,
+      "roles": ["PC Member"],
+      "tracks": ["Main Conference", "Posters & Tools Track"]
+    },
+    {
+      "name": "International Workshop on Prompt Engineering for Software Engineering",
+      "acronym": "PromptSE",
+      "year": 2026,
+      "roles": ["Subreviewer"],
+      "tracks": ["Workshop Track"]
+    },
+    {
+      "name": "IEEE International Requirements Engineering Conference - Next! Track",
+      "acronym": "RE@Next!",
+      "year": 2024,
+      "roles": ["Subreviewer"],
+      "tracks": ["Next! Track"]
+    },
+    {
+      "name": "IEEE International Requirements Engineering Conference",
+      "acronym": "RE",
+      "year": 2024,
+      "roles": ["Subreviewer"],
+      "tracks": ["Main Conference"]
+    },
+    {
+      "name": "Artificial Intelligence and Requirements Engineering Workshop",
+      "acronym": "AIRE",
+      "year": 2024,
+      "roles": ["PC Member"],
+      "tracks": ["Workshop Track"]
+    },
+    {
+      "name": "International Conference on Advanced Information Systems Engineering",
+      "acronym": "CAiSE",
+      "year": 2024,
+      "roles": ["Subreviewer"],
+      "tracks": ["Conference Track"]
+    }
+  ],
+  "reviewerJournals": [
+    "IEEE Transactions on Software Engineering (TSE)",
+    "ACM Transactions on Software Engineering and Methodology (TOSEM)",
+    "Requirements Engineering Journal",
+    "Journal of Systems and Software (JSS)",
+    "Information and Software Technology (IST)",
+    "Expert Systems with Applications (ESWA)",
+    "Engineering Applications of Artificial Intelligence",
+    "Empirical Software Engineering (EMSE)",
+    "Data in Brief",
+    "Computing",
+    "Automated Software Engineering (ASE)"
+  ],
+  "reviewerConferencesWorkshops": []
+}
