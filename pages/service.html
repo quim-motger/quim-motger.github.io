@@ -1,93 +1,124 @@
-<article class="wrapper style2">
-    <div class="container">
-        <header style="text-align: left;">
+<article class="page">
+    <header class="page-head">
+        <div class="page-icon"><i class="fas fa-hands-helping"></i></div>
+        <div class="page-head-text">
             <h2>Service</h2>
-            <p style="margin-top: 0.6em; color: #666;">Community and academic service activities.</p>
-        </header>
-        <div id="service-sections"></div>
-    </div>
+            <p class="page-lead">Community and academic service activities.</p>
+        </div>
+    </header>
+    <div id="service-sections"></div>
 </article>
 
+<style>
+    .svc-row {
+        padding: 9px 16px;
+        align-items: center;
+    }
+
+    .svc-row .row-media {
+        width: 30px;
+        height: 30px;
+        flex-basis: 30px;
+        font-size: 12px;
+    }
+
+    .svc-row .row-title {
+        font-weight: 500;
+    }
+
+    .svc-row .chip.small {
+        white-space: normal;
+        color: var(--text);
+    }
+
+    .svc-row .journal-chip {
+        transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .svc-row .journal-chip:hover {
+        border-color: var(--accent);
+        color: var(--accent) !important;
+        text-decoration: none !important;
+    }
+
+    .service-linkedin {
+        color: #0a66c2 !important;
+        margin-left: 0.25em;
+    }
+
+    .service-linkedin:hover {
+        opacity: 0.75;
+        text-decoration: none !important;
+    }
+</style>
+
 <script>
-    function renderServiceSection(title, icon, itemsHtml) {
-        const count = (itemsHtml.match(/<li>/g) || []).length;
+(function() {
+    function renderServiceSection(title, icon, rows) {
         return `
-            <details class="service-section">
-                <summary>
-                    <i class="fas ${icon} service-icon"></i>
-                    <span class="service-title">${title}</span>
-                    <span class="service-count">${count}</span>
-                    <i class="fas fa-chevron-down service-chevron"></i>
-                </summary>
-                <ul>
-                    ${itemsHtml}
-                </ul>
-            </details>
+            <h3 class="section-label"><i class="fas ${icon}"></i>${title} <span class="count">· ${rows.length}</span></h3>
+            <div class="card">${rows.map(row => row(icon)).join('')}</div>
         `;
+    }
+
+    // Each row is rendered with its section icon, a title line, an optional detail line and year badge
+    function item(titleHtml, metaHtml, year) {
+        return icon => `
+            <div class="row-item svc-row">
+                <div class="row-media"><i class="fas ${icon}"></i></div>
+                <div class="row-body">
+                    <div class="row-title">${titleHtml}</div>
+                    ${metaHtml ? `<p class="row-meta">${metaHtml}</p>` : ''}
+                </div>
+                ${year ? `<div class="row-aside"><span class="badge">${year}</span></div>` : ''}
+            </div>`;
     }
 
     function renderServiceData(data) {
         const container = document.getElementById('service-sections');
         if (!container) return;
 
-        const getSortYear = (item) => {
-            if (typeof item.year === 'number') return item.year;
-            if (typeof item.year === 'string') {
-                const parsed = parseInt(item.year, 10);
+        const getSortYear = (entry) => {
+            if (typeof entry.year === 'number') return entry.year;
+            if (typeof entry.year === 'string') {
+                const parsed = parseInt(entry.year, 10);
                 if (!Number.isNaN(parsed)) return parsed;
             }
-            const match = (item.event || '').match(/\b(19|20)\d{2}\b/g);
+            const match = (entry.event || '').match(/\b(19|20)\d{2}\b/g);
             return match ? parseInt(match[match.length - 1], 10) : 0;
         };
 
         const ocItems = [...data.organizingCommittee]
-            .sort((a, b) => {
-                const yearDiff = getSortYear(b) - getSortYear(a);
-                if (yearDiff !== 0) return yearDiff;
-                return (a.event || '').localeCompare(b.event || '');
-            })
-            .map(item => `<li>${item.role_html}. ${item.event}.</li>`)
-            .join('');
-
-        const phdStudentItems = (data.phdStudents || [])
-            .map(item => {
-                const institution = item.institution ? ` (${item.institution})` : '';
-                const programName = item.program_url
-                    ? `<a href="${item.program_url}" target="_blank" rel="noopener">${item.program}</a>`
-                    : item.program;
-                const program = item.program ? ` - ${programName}` : '';
-                const linkedin = item.url
-                    ? ` <a href="${item.url}" target="_blank" rel="noopener" class="service-linkedin" title="LinkedIn" aria-label="${item.name} on LinkedIn"><i class="fab fa-linkedin"></i></a>`
-                    : '';
-                return `<li><strong>${item.name}</strong>${institution}${program}.${linkedin}</li>`;
-            })
-            .join('');
-
-        const studentItems = data.students
-            .map(item => {
-                const institution = item.institution ? ` (${item.institution})` : '';
-                return `<li><strong>${item.name}</strong>${institution} - Academic course: ${item.academic_course} - ${item.type} - ${item.supervision}.</li>`;
-            })
-            .join('');
+            .sort((a, b) => getSortYear(b) - getSortYear(a) || (a.event || '').localeCompare(b.event || ''))
+            .map(entry => item(entry.role_html, entry.event, getSortYear(entry)));
 
         const conferenceWorkshopItems = [...(data.conferenceWorkshopService || [])]
-            .sort((a, b) => {
-                const yearA = typeof a.year === 'number' ? a.year : 0;
-                const yearB = typeof b.year === 'number' ? b.year : 0;
-                if (yearB !== yearA) return yearB - yearA;
-                return `${a.name} ${a.acronym}`.localeCompare(`${b.name} ${b.acronym}`);
-            })
-            .map(item => {
-                const tracks = (item.tracks || []).join('; ');
-                const roles = (item.roles || []).join(', ');
-                return `<li>${item.name} (${item.acronym}), ${item.year}. Roles: ${roles}.${tracks ? ` Tracks: ${tracks}.` : ''}</li>`;
-            })
-            .join('');
+            .sort((a, b) => (b.year || 0) - (a.year || 0) || `${a.name} ${a.acronym}`.localeCompare(`${b.name} ${b.acronym}`))
+            .map(entry => {
+                const tracks = (entry.tracks || []).join(' · ');
+                const roles = (entry.roles || []).join(', ');
+                return item(`<strong>${roles}</strong> · ${entry.acronym}`, `${entry.name}${tracks ? ` — ${tracks}` : ''}`, entry.year);
+            });
 
         const journalItems = (data.journalEditorialRoles || [])
-            .map(item => `<li>${item.role_html}. ${item.journal}.</li>`)
-            .concat(data.reviewerJournals.map(item => `<li><strong>Reviewer</strong>. ${item}.</li>`))
-            .join('');
+            .map(entry => item(entry.role_html, entry.journal))
+            .concat(data.reviewerJournals.length ? [item('<strong>Reviewer</strong>', `<span class="chips">${data.reviewerJournals.map(journal => typeof journal === 'string' ? `<span class="chip small">${journal}</span>` : `<a class="chip small journal-chip" href="${journal.url}" target="_blank" rel="noopener">${journal.name}</a>`).join('')}</span>`)] : []);
+
+        const phdStudentItems = (data.phdStudents || []).map(entry => {
+            const programName = entry.program_url
+                ? `<a href="${entry.program_url}" target="_blank" rel="noopener">${entry.program}</a>`
+                : (entry.program || '');
+            const linkedin = entry.url
+                ? `<a href="${entry.url}" target="_blank" rel="noopener" class="service-linkedin" title="LinkedIn" aria-label="${entry.name} on LinkedIn"><i class="fab fa-linkedin"></i></a>`
+                : '';
+            const details = [entry.institution, programName].filter(Boolean).join(' · ');
+            return item(`<strong>${entry.name}</strong>${linkedin}`, details);
+        });
+
+        const studentItems = data.students.map(entry => item(
+            `<strong>${entry.name}</strong>`,
+            `${entry.type}${entry.institution ? ` — ${entry.institution}` : ''}`,
+            entry.academic_course));
 
         container.innerHTML = [
             renderServiceSection('Organizing Committee Membership', 'fa-sitemap', ocItems),
@@ -98,132 +129,15 @@
         ].join('');
     }
 
-    async function loadServiceData() {
-        const container = document.getElementById('service-sections');
-        try {
-            const response = await fetch(`../data/service.json?v=${Date.now()}`, { cache: 'no-store' });
-            if (!response.ok) {
-                throw new Error('Failed to load service data');
-            }
-
-            const data = await response.json();
-            renderServiceData(data);
-        } catch (error) {
+    fetch(`data/service.json?v=${Date.now()}`, { cache: 'no-store' })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to load service data');
+            return response.json();
+        })
+        .then(renderServiceData)
+        .catch(error => {
             console.error('Error loading service data:', error);
-            if (container) {
-                container.innerHTML = '<p style="color: red; padding: 1em 0;">Error loading service data. Please try again later.</p>';
-            }
-        }
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadServiceData);
-    } else {
-        loadServiceData();
-    }
+            document.getElementById('service-sections').innerHTML = '<div class="empty">Error loading service data. Please try again later.</div>';
+        });
+})();
 </script>
-
-<style>
-    .service-section {
-        background: #fff;
-        border: 1px solid rgba(58, 110, 165, 0.15);
-        border-radius: 10px;
-        padding: 1em 1.4em;
-        margin: 0 0 1em 0;
-        text-align: left;
-    }
-
-    .service-linkedin {
-        color: #0a66c2;
-        border-bottom: none;
-        text-decoration: none;
-        margin-left: 0.2em;
-    }
-
-    .service-linkedin:hover {
-        opacity: 0.75;
-    }
-
-    .service-section summary {
-        display: flex;
-        align-items: center;
-        gap: 0.8em;
-        cursor: pointer;
-        list-style: none;
-        user-select: none;
-    }
-
-    .service-section summary::-webkit-details-marker {
-        display: none;
-    }
-
-    .service-icon {
-        width: 2.2em;
-        height: 2.2em;
-        flex: 0 0 2.2em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: rgba(58, 110, 165, 0.1);
-        color: #3a6ea5;
-        font-size: 1em;
-    }
-
-    .service-title {
-        flex: 1;
-        color: #3a6ea5;
-        font-weight: bold;
-        font-size: 1.1em;
-        line-height: 1.3;
-    }
-
-    .service-count {
-        min-width: 1.8em;
-        padding: 0.1em 0.6em;
-        border-radius: 1em;
-        background: #f0f3f7;
-        color: #666;
-        font-size: 0.85em;
-        text-align: center;
-    }
-
-    .service-chevron {
-        color: #999;
-        transition: transform 0.25s ease;
-    }
-
-    .service-section[open] .service-chevron {
-        transform: rotate(180deg);
-    }
-
-    .service-section summary:hover .service-title {
-        text-decoration: underline;
-    }
-
-    .service-section[open] summary {
-        border-bottom: 1px solid #e5e5e5;
-        padding-bottom: 0.8em;
-        margin-bottom: 0.8em;
-    }
-
-    .service-section ul {
-        margin: 0;
-        padding-left: 1.2em;
-        text-align: left;
-    }
-
-    .service-section li {
-        color: #333;
-        line-height: 1.45;
-        margin-bottom: 0.3em;
-        text-align: left;
-    }
-
-    @media screen and (max-width: 768px) {
-        .service-section {
-            margin-left: 8px;
-            margin-right: 8px;
-        }
-    }
-</style>

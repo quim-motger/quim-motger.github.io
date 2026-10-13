@@ -1,174 +1,116 @@
-<article class="wrapper style2">
-    <div class="container">
-        <header style="text-align: left;">
+<article class="page">
+    <header class="page-head">
+        <div class="page-icon"><i class="fas fa-chalkboard-user"></i></div>
+        <div class="page-head-text">
             <h2>Teaching</h2>
-        </header>
-        <div class="row aln-center" id="teaching-container">
-            <!-- Teaching content will be dynamically loaded here -->
+            <p class="page-lead" id="teaching-summary">Courses taught at UPC-BarcelonaTech and UOC.</p>
         </div>
-    </div>
+    </header>
+
+    <div id="teaching-container"></div>
 </article>
 
 <style>
-a:hover {
-    color: #2B6CB0 !important;
+.degree-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: #fafbfc;
+    border-bottom: 1px solid var(--line);
 }
-a:hover strong span {
-    width: 100%;
+
+.degree-head .row-media {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+}
+
+.degree-head .row-title {
+    flex: 1;
+}
+
+.course-row {
+    align-items: center;
+}
+
+.course-row .row-title {
+    font-weight: 500;
+}
+
+.course-semesters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4px;
+    max-width: 55%;
 }
 
 @media screen and (max-width: 768px) {
-    .col-12 {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        background: white !important;
-        border: 1px solid rgba(58, 110, 165, 0.1) !important;
-        border-radius: 12px !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.03) !important;
-        padding: 1.2em 1.2em 1.2em 1.2em !important;
-        margin-bottom: 2em !important;
-        margin-left: 24px !important;
-        margin-right: 8px !important;
+    .course-row {
+        flex-wrap: wrap;
     }
-    .university-logo {
-        width: 100% !important;
-        margin-bottom: 0 !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        padding: 0 !important;
-        box-sizing: border-box !important;
-    }
-    .university-logo > div {
-        width: 100% !important;
-        max-width: 350px !important;
-        height: auto !important;
-        margin: 0 auto !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        background: none !important;
-        border: none !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-    }
-    .university-logo img {
-        max-height: 80px !important;
-        width: auto !important;
-        height: auto !important;
-    }
-    .box.style1 {
-        margin: 0 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-        border-radius: 0 !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-    header[style] {
-        margin-left: 8px !important;
-        margin-right: 8px !important;
-    }
-    .container {
-        padding-left: 8px !important;
-        padding-right: 8px !important;
+
+    .course-semesters {
+        max-width: none;
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 58px;
     }
 }
 </style>
 
 <script>
-    // Function to create a semester badge
-    function createSemesterBadge(semester) {
-        return `<span style="font-weight: 520; background: rgba(58, 110, 165, 0.1); color: #666; padding: 0.2em 0.6em; border-radius: 12px; font-size: 0.9em; text-shadow: none;">${semester}</span>`;
+(function() {
+    function institutionOf(degree) {
+        return /uoc/i.test(degree.logo) ? 'Universitat Oberta de Catalunya' : 'Universitat Politècnica de Catalunya';
     }
-    
-    // Function to create a course list item
-    function createCourseItem(course, isLast) {
-        const borderStyle = isLast ? '' : 'style="margin-bottom: 1.5em; padding-bottom: 1.5em; border-bottom: 1px solid rgba(0,0,0,0.1);"';
-        const semestersHtml = course.semesters.map(s => createSemesterBadge(s)).join('\n                                            ');
-        
+
+    function createCourseRow(course) {
+        const semesters = [...course.semesters].sort().reverse();
         return `
-            <li ${borderStyle}>
-                <div style="display: flex; align-items: center; gap: 0.5em;">
-                    <i class="fas fa-book" style="color: #E53E3E; width: 20px;"></i>
-                    <a target="_blank" href="${course.url}" style="text-decoration: none; color: inherit; transition: all 0.2s ease;">
-                        <strong style="display: inline-block; position: relative;">
-                            ${course.name} (${course.code})
-                            <span style="position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background-color: #2B6CB0; transition: width 0.2s ease;"></span>
-                        </strong>
-                    </a>
+            <a class="row-item course-row" href="${course.url}" target="_blank" rel="noopener">
+                <span class="badge code accent">${course.code}</span>
+                <div class="row-body">
+                    <div class="row-title">${course.name}</div>
                 </div>
-                <div style="font-size: 0.9em; color: #666; margin-top: 0.3em; display: flex; align-items: center; gap: 0.5em;">
-                    <i class="fas fa-calendar-alt" style="color: #38a169; width: 20px;"></i>
-                    <span>Courses 
-                        <span style="display: inline-flex; gap: 0.5em; flex-wrap: wrap;">
-                            ${semestersHtml}
-                        </span>
-                    </span>
+                <div class="course-semesters" title="Semesters taught">
+                    ${semesters.map(s => `<span class="chip small">${s}</span>`).join('')}
                 </div>
-            </li>
+            </a>
         `;
     }
-    
-    // Function to create a degree card
+
     function createDegreeCard(degree) {
-        const coursesHtml = degree.courses.map((course, index) => 
-            createCourseItem(course, index === degree.courses.length - 1)
-        ).join('\n                        ');
-        
         return `
-            <div class="col-12" style="display: flex; align-items: center;">
-                <div class="university-logo" style="width: 300px; height: 100%; display: flex; justify-content: center; align-items: center;">
-                    <div style="width: 280px; height: 100%; background: white; padding: 10px; border-radius: 8px; border: 1px solid rgba(58, 110, 165, 0.2); display: flex; justify-content: center; align-items: center;">
-                        <img src="${degree.logo}" style="max-height: 120px; max-width: 100%; width: auto; height: auto; object-fit: contain;">
+            <div class="card">
+                <div class="degree-head">
+                    <div class="row-media logo"><img src="${degree.logo}" alt=""></div>
+                    <div class="row-body">
+                        <div class="row-title">${degree.url ? `<a href="${degree.url}" target="_blank" rel="noopener" style="color: inherit;">${degree.title}</a>` : degree.title}</div>
+                        <p class="row-meta">${institutionOf(degree)}</p>
                     </div>
                 </div>
-                <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em;">
-                    <div>
-                        <h4 style="margin: 0 0 1em 0; color: #1a1a1a; padding-bottom: 0.5em; border-bottom: 1px solid rgba(0,0,0,0.1);">${degree.title}</h4>
-                        <ul style="margin: 0; color: #333; list-style-type: none; padding-left: 0;">
-                            ${coursesHtml}
-                        </ul>
-                    </div>
-                </section>
+                ${degree.courses.map(createCourseRow).join('')}
             </div>
         `;
     }
-    
-    // Load teaching data from JSON and render it
-    async function loadTeaching() {
-        try {
-            const response = await fetch('../data/teaching.json');
-            if (!response.ok) {
-                throw new Error('Failed to load teaching data');
-            }
-            const degrees = await response.json();
-            const container = document.getElementById('teaching-container');
-            
-            // Clear container
-            container.innerHTML = '';
-            
-            // Create and append each degree card
-            degrees.forEach(degree => {
-                const cardHtml = createDegreeCard(degree);
-                container.insertAdjacentHTML('beforeend', cardHtml);
-            });
-        } catch (error) {
+
+    fetch('data/teaching.json')
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to load teaching data');
+            return response.json();
+        })
+        .then(degrees => {
+            const courses = degrees.reduce((n, d) => n + d.courses.length, 0);
+            const years = degrees.flatMap(d => d.courses.flatMap(c => c.semesters.map(s => parseInt(s, 10))));
+            document.getElementById('teaching-summary').textContent =
+                `${courses} courses across ${degrees.length} degrees at UPC-BarcelonaTech and UOC, since ${Math.min(...years)}.`;
+            document.getElementById('teaching-container').innerHTML = degrees.map(createDegreeCard).join('');
+        })
+        .catch(error => {
             console.error('Error loading teaching data:', error);
-            const container = document.getElementById('teaching-container');
-            container.innerHTML = '<p style="color: red; padding: 2em;">Error loading teaching information. Please try again later.</p>';
-        }
-    }
-    
-    // Load teaching immediately (for dynamic page loading)
-    // Also listen for DOMContentLoaded as a fallback
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadTeaching);
-    } else {
-        // DOM already loaded, call immediately
-        loadTeaching();
-    }
+            document.getElementById('teaching-container').innerHTML = '<div class="empty">Error loading teaching information. Please try again later.</div>';
+        });
+})();
 </script>

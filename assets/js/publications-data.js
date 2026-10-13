@@ -17,7 +17,7 @@
     const FALLBACK_URL = 'data/bibliography.bib';
     const DBLP_SPARQL = 'https://sparql.dblp.org/sparql';
     const OPENALEX_API = 'https://api.openalex.org/works';
-    const CACHE_KEY = 'publications-cache-v1';
+    const CACHE_KEY = 'publications-cache-v2';
     const CACHE_TTL_MS = 12 * 60 * 60 * 1000;
     const TYPE_ORDER = ['article', 'inproceedings', 'incollection', 'book', 'misc'];
 
@@ -152,6 +152,13 @@ GROUP BY ?p`;
         'review': 'misc'
     };
 
+    function rawAuthorName(raw) {
+        const name = (raw || '').replace(/\s+/g, ' ').trim();
+        const parts = name.split(',');
+        // "Last, First" -> "First Last"
+        return parts.length === 2 ? `${parts[1].trim()} ${parts[0].trim()}` : name;
+    }
+
     function loadOpenAlex(authorId) {
         const url = `${OPENALEX_API}?filter=author.id:${authorId}&per_page=200` +
             '&select=id,doi,title,publication_year,type,authorships,primary_location';
@@ -170,7 +177,9 @@ GROUP BY ?p`;
                 rawType: work.type,
                 type,
                 title: cleanTitle(work.title),
-                authors: (work.authorships || []).map(a => (a.author && a.author.display_name) || a.raw_author_name),
+                // Prefer the name as printed on the paper: OpenAlex's author disambiguation can
+                // link an author to someone else's profile (and display that profile's name)
+                authors: (work.authorships || []).map(a => rawAuthorName(a.raw_author_name) || (a.author && a.author.display_name)),
                 venue: isArxiv ? 'arXiv' : (source.display_name || ''),
                 year: String(work.publication_year || ''),
                 doi,

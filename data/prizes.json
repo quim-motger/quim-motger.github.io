@@ -3,7 +3,12 @@
     "year": 2026,
     "prizes": [
       {
-        "description": "<strong>Best doctoral thesis award in the SISTEDES scope, 2026</strong> (ex aequo). Awarded for the PhD thesis <em>Natural Language Processing Methods for Document-based Requirements Specification and Validation Tasks</em>. <a href=\"https://www.sistedes.es/premios/premio-a-la-mejor-tesis-doctoral-en-el-ambito-de-sistedes-2026\" target=\"_blank\" rel=\"noopener noreferrer\">Official announcement</a>."
+        "title": "Best doctoral thesis award in the SISTEDES scope, 2026 (ex aequo)",
+        "details": "Awarded for the PhD thesis <em>Natural Language Processing Methods for Document-based Requirements Specification and Validation Tasks</em>. <a href=\"https://www.sistedes.es/premios/premio-a-la-mejor-tesis-doctoral-en-el-ambito-de-sistedes-2026\" target=\"_blank\" rel=\"noopener noreferrer\">Official announcement</a>."
+      },
+      {
+        "title": "Best reviewer award",
+        "details": "32nd International Working Conference on Requirements Engineering: Foundation for Software Quality (REFSQ 2026)."
       }
     ]
   },
@@ -11,7 +16,8 @@
     "year": 2025,
     "prizes": [
       {
-        "description": "<strong>Best posters & tools award</strong>. RE-Miner 2.0: A Holistic Framework for Mining Mobile Application Reviews. Max Tiessler and Quim Motger. REFSQ-2025 Posters & Tools Track"
+        "title": "Best posters & tools award",
+        "details": "RE-Miner 2.0: A Holistic Framework for Mining Mobile Application Reviews. Max Tiessler and Quim Motger. REFSQ-2025 Posters & Tools Track."
       }
     ]
   },
@@ -19,7 +25,8 @@
     "year": 2023,
     "prizes": [
       {
-        "description": "<strong>Best poster award</strong>. TransFeatEx: a NLP pipeline for feature extraction. Agustí Gallego, Quim Motger, Xavier Franch, Jordi Marco. REFSQ-2023 Posters & Tools Track"
+        "title": "Best poster award",
+        "details": "TransFeatEx: a NLP pipeline for feature extraction. Agustí Gallego, Quim Motger, Xavier Franch, Jordi Marco. REFSQ-2023 Posters & Tools Track."
       }
     ]
   },
@@ -27,9 +34,9 @@
     "year": 2022,
     "prizes": [
       {
-        "description": "<strong>Extraordinary Award for the best academic record</strong> of the University Master's Degree in Computer Engineering - Universitat Oberta de Catalunya"
+        "title": "Extraordinary Award for the best academic record",
+        "details": "University Master's Degree in Computer Engineering - Universitat Oberta de Catalunya."
       }
     ]
   }
 ]
-

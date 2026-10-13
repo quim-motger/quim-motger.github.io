@@ -1,383 +1,194 @@
-<article class="wrapper style2">
-    <div class="container">
-        <header style="text-align: left;">
+<article class="page">
+    <header class="page-head">
+        <div class="page-icon"><i class="fas fa-book"></i></div>
+        <div class="page-head-text">
             <h2>Publications</h2>
-            <div id="publications-disclaimer" class="pub-disclaimer">
-                <i class="fa-solid fa-circle-info"></i>
-                <span id="publications-disclaimer-text">
-                    This list is generated automatically from
-                    <a href="https://dblp.org/pid/242/6477.html" target="_blank" rel="noopener"><img src="images/sources/dblp.png" alt="">dblp</a>
-                    and
-                    <a href="https://openalex.org/authors/A5060562561" target="_blank" rel="noopener"><img src="images/sources/openalex.png" alt="">OpenAlex</a>,
-                    so some entries may be missing or show metadata inconsistencies.
-                </span>
-                <span class="pub-disclaimer-check">
-                    Please check
-                    <a href="https://dblp.org/pid/242/6477.html" target="_blank" rel="noopener" title="dblp"><img src="images/sources/dblp.png" alt="dblp"></a>
-                    <a href="https://scholar.google.com/citations?user=_xi50f8AAAAJ&amp;hl=en" target="_blank" rel="noopener" title="Google Scholar"><i class="fa-brands fa-google-scholar" style="color: #4285f4;"></i></a>
-                    <a href="https://orcid.org/0000-0002-4896-7515" target="_blank" rel="noopener" title="ORCID"><i class="fa-brands fa-orcid" style="color: #a6ce39;"></i></a>
-                </span>
-            </div>
-            <div id="publication-filters" style="display: flex; gap: 1em; margin: 2em 0; width: 100%;">
-                <!-- Filters will be added here dynamically -->
-            </div>
-        </header>
-        <div class="row aln-center">
-            <div id="publications-list"></div>
+            <p class="page-lead" id="publications-summary">Journal articles, conference papers, book chapters and pre-prints.</p>
+        </div>
+    </header>
+
+    <div class="note" id="publications-disclaimer">
+        <i class="fas fa-circle-info"></i>
+        <div>
+            <span id="publications-disclaimer-text">
+                Generated automatically from
+                <a href="https://dblp.org/pid/242/6477.html" target="_blank" rel="noopener"><img class="src-logo" src="images/sources/dblp.png" alt="">dblp</a>
+                and
+                <a href="https://openalex.org/authors/A5060562561" target="_blank" rel="noopener"><img class="src-logo" src="images/sources/openalex.png" alt="">OpenAlex</a>,
+                so some entries may be missing or show metadata inconsistencies.
+            </span>
+            For authoritative bibliographic data, please refer to
+            <a href="https://dblp.org/pid/242/6477.html" target="_blank" rel="noopener"><img class="src-logo" src="images/sources/dblp.png" alt="">dblp</a>,
+            <a href="https://scholar.google.com/citations?user=_xi50f8AAAAJ&amp;hl=en" target="_blank" rel="noopener"><i class="fab fa-google-scholar" style="color: #4285f4;"></i> Google Scholar</a>
+            or
+            <a href="https://orcid.org/0000-0002-4896-7515" target="_blank" rel="noopener"><i class="fab fa-orcid" style="color: #a6ce39;"></i> ORCID</a>.
+            If you spot an error in any entry, please
+            <a href="mailto:joaquim.motger@upc.edu?subject=Publication%20metadata%20error"><i class="fas fa-envelope"></i> let me know</a>
+            and I'll be happy to fix it.
         </div>
     </div>
+
+    <div class="toolbar">
+        <label class="search">
+            <i class="fas fa-magnifying-glass"></i>
+            <input type="search" id="publication-search" placeholder="Search title, author, venue…" aria-label="Search publications">
+        </label>
+        <div id="publication-filters" class="toolbar"></div>
+    </div>
+
+    <div id="publications-list"><div class="empty"><i class="fas fa-spinner fa-spin"></i> Loading publications…</div></div>
 </article>
 
-<!-- Add Font Awesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<script>
-// Only create the manager if it doesn't exist
-if (typeof window.publicationsManager === 'undefined') {
-    window.publicationsManager = (function() {
-        let isInitialized = false;
-        
-        function getTypeInfo(type) {
-            switch(type.toLowerCase()) {
-                case 'article': 
-                    return {
-                        icon: 'fa-newspaper',
-                        label: 'Journal',
-                        color: '#3498db'
-                    };
-                case 'inproceedings': 
-                    return {
-                        icon: 'fa-users',
-                        label: 'Conference',
-                        color: '#27ae60'
-                    };
-                case 'book': 
-                    return {
-                        icon: 'fa-book',
-                        label: 'Book',
-                        color: '#8e44ad'
-                    };
-                case 'incollection': 
-                    return {
-                        icon: 'fa-book-open',
-                        label: 'Book Chapter',
-                        color: '#e67e22'
-                    };
-                case 'misc': 
-                    return {
-                        icon: 'fa-file-alt',
-                        label: 'Pre-print',
-                        color: '#c0392b'
-                    };
-                default: 
-                    return {
-                        icon: 'fa-file',
-                        label: 'Other',
-                        color: '#7f8c8d'
-                    };
-            }
-        }
-
-        function createFilterBoxes(entries) {
-            const filtersContainer = document.getElementById('publication-filters');
-            // Clear existing filters first
-            filtersContainer.innerHTML = '';
-            
-            const typeCounts = {};
-            
-            // Count publications by type
-            entries.forEach(entry => {
-                typeCounts[entry.type] = (typeCounts[entry.type] || 0) + 1;
-            });
-
-            // Create filter boxes
-            const numTypes = Object.keys(typeCounts).length;
-            Object.entries(typeCounts).forEach(([type, count]) => {
-                const typeInfo = getTypeInfo(type);
-                const filterBox = document.createElement('div');
-                filterBox.className = 'filter-box active';
-                filterBox.dataset.type = type;
-                filterBox.style.flex = `1 1 ${100/numTypes}%`;
-                filterBox.innerHTML = `
-                    <div class="filter-content" style="
-                        background: white;
-                        border-radius: 8px;
-                        padding: 1.2em;
-                        display: flex;
-                        align-items: center;
-                        gap: 0.8em;
-                        cursor: pointer;
-                        border: 1px solid rgba(58, 110, 165, 0.2);
-                        transition: all 0.3s ease;
-                        height: 100%;
-                    ">
-                        <div style="margin: 0 0.5em;">
-                            <i class="fas ${typeInfo.icon}" style="font-size: 2.5em; color: ${typeInfo.color};"></i>
-                        </div>
-                        <div style="display: flex; flex-direction: column;">
-                            <span style="font-size: 1.5em; font-weight: bold; color: ${typeInfo.color};">${count}</span>
-                            <span style="font-size: 1.1em; color: #666;">${typeInfo.label}</span>
-                        </div>
-                    </div>
-                `;
-                
-                filterBox.addEventListener('click', () => {
-                    filterBox.classList.toggle('active');
-                    filterPublications();
-                });
-                
-                filtersContainer.appendChild(filterBox);
-            });
-        }
-
-        function filterPublications() {
-            const activeTypes = Array.from(document.querySelectorAll('.filter-box.active')).map(box => box.dataset.type);
-            const publications = document.querySelectorAll('#publications-list .col-12');
-            
-            publications.forEach(pub => {
-                const type = pub.dataset.type;
-                if (activeTypes.includes(type)) {
-                    pub.style.display = 'flex';
-                } else {
-                    pub.style.display = 'none';
-                }
-            });
-        }
-
-        function escapeHtml(value) {
-            return String(value || '').replace(/[&<>"']/g, ch => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-            })[ch]);
-        }
-
-        function updateDisclaimer(result) {
-            const text = document.getElementById('publications-disclaimer-text');
-            if (!text) return;
-            if (result.fallback) {
-                text.innerHTML = 'The live sources (dblp, OpenAlex) could not be reached, so an offline snapshot is shown and it may be outdated.';
-            } else if (!result.sources.dblp || !result.sources.openalex) {
-                text.innerHTML += ' <em>(' + (result.sources.dblp ? 'OpenAlex' : 'dblp') + ' is currently unreachable, so the list may be incomplete.)</em>';
-            }
-        }
-
-        function renderEntry(entry) {
-            const typeInfo = getTypeInfo(entry.type);
-            const venue = entry.venue ? `${escapeHtml(entry.venue)}, ` : '';
-            const citation = `${escapeHtml(entry.authors.join(' and '))}. <strong>${escapeHtml(entry.title)}</strong>. ${venue}${escapeHtml(entry.year)}.`;
-            const link = entry.url;
-
-            return `
-                <div class="col-12" style="display: flex; align-items: stretch; margin-bottom: 1em;" data-type="${entry.type}">
-                    <div style="width: 150px; display: flex; justify-content: center; align-items: center;">
-                        <div style="width: 100px; height: 100%; background: white; border-radius: 8px; border: 1px solid rgba(58, 110, 165, 0.2); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; padding: 0;">
-                            <i class="fas ${typeInfo.icon}" style="font-size: 2em; color: ${typeInfo.color}; margin: 0; padding: 0; line-height: 1;"></i>
-                            <span style="font-size: 0.8em; color: ${typeInfo.color}; text-align: center; margin: 0; padding: 0; line-height: 1;">${typeInfo.label}</span>
-                        </div>
-                    </div>
-                    ${link ? `
-                        <a href="${escapeHtml(link)}" target="_blank" rel="noopener" style="text-decoration: none; flex: 1;">
-                            <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em; transition: all 0.3s ease; cursor: pointer; background: white;">
-                                <div>
-                                    <p style="margin: 0; color: #333; line-height: 1.5;">${citation}</p>
-                                </div>
-                            </section>
-                        </a>
-                    ` : `
-                        <section class="box style1" style="flex: 1; text-align: left; padding: 1.5em;">
-                            <div>
-                                <p style="margin: 0; color: #333; line-height: 1.5;">${citation}</p>
-                            </div>
-                        </section>
-                    `}
-                </div>
-            `;
-        }
-
-        function loadPublications() {
-            // Reset initialization if the content is not loaded
-            const container = document.getElementById('publications-list');
-            if (!container || !container.innerHTML.trim()) {
-                isInitialized = false;
-            }
-
-            if (isInitialized) return;
-            isInitialized = true;
-
-            if (!container) {
-                console.error('Could not find publications-list element');
-                return;
-            }
-
-            container.innerHTML = '<p class="pub-loading"><i class="fas fa-spinner fa-spin"></i> Loading publications…</p>';
-
-            window.PublicationsData.load()
-                .then(result => {
-                    const entries = result.entries;
-                    if (!entries || entries.length === 0) {
-                        throw new Error('No publications found');
-                    }
-
-                    updateDisclaimer(result);
-
-                    // Create filter boxes first
-                    createFilterBoxes(entries);
-
-                    // Group entries by year (entries arrive sorted by year, then type)
-                    const entriesByYear = entries.reduce((acc, entry) => {
-                        const year = entry.year || 'Unknown';
-                        if (!acc[year]) acc[year] = [];
-                        acc[year].push(entry);
-                        return acc;
-                    }, {});
-
-                    // Sort years in descending order
-                    const sortedYears = Object.keys(entriesByYear).sort((a, b) => b - a);
-
-                    container.innerHTML = sortedYears.map(year => `
-                        <div class="year-section" style="margin-bottom: 2em;">
-                            <h3 style="
-                                color: #666;
-                                border-bottom: 1px solid #ddd;
-                                padding-bottom: 0.5em;
-                                margin-bottom: 1em;
-                            ">${escapeHtml(year)}</h3>
-                            ${entriesByYear[year].map(renderEntry).join('')}
-                        </div>
-                    `).join('');
-                })
-                .catch(error => {
-                    console.error('Error loading publications:', error);
-                    isInitialized = false;
-                    container.innerHTML = '<p>Error loading publications. Please check <a href="https://dblp.org/pid/242/6477.html" target="_blank" rel="noopener">dblp</a> or <a href="https://scholar.google.com/citations?user=_xi50f8AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>';
-                });
-        }
-
-        // Return the public interface
-        return {
-            loadPublications: loadPublications
-        };
-    })();
-}
-
-// Call the function immediately
-window.publicationsManager.loadPublications();
-
-// Add event listener for page navigation
-document.addEventListener('DOMContentLoaded', function() {
-    window.publicationsManager.loadPublications();
-});
-</script>
-
 <style>
-.pub-disclaimer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.4em 1em;
-    margin: 0.8em 0 0;
-    padding: 0.6em 0.9em;
-    font-size: 0.8em;
-    line-height: 1.5;
-    color: #777;
-    background: rgba(58, 110, 165, 0.05);
-    border-left: 3px solid rgba(58, 110, 165, 0.4);
-    border-radius: 4px;
+.src-logo {
+    width: 13px;
+    height: 13px;
+    vertical-align: -2px;
+    margin-right: 3px;
 }
-.pub-disclaimer > i {
-    color: #3a6ea5;
-}
-.pub-disclaimer #publications-disclaimer-text {
-    flex: 1 1 20em;
-}
-.pub-disclaimer a {
-    color: #3a6ea5;
-    text-decoration: none;
-    border-bottom: none;
-    white-space: nowrap;
-}
-.pub-disclaimer a:hover {
-    text-decoration: underline;
-}
-.pub-disclaimer img {
-    width: 1.1em;
-    height: 1.1em;
-    vertical-align: -0.2em;
-    margin-right: 0.25em;
-}
-.pub-disclaimer-check {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6em;
-    white-space: nowrap;
-}
-.pub-disclaimer-check a {
-    font-size: 1.25em;
-    line-height: 1;
-    opacity: 0.85;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.pub-disclaimer-check a:hover {
-    opacity: 1;
-    transform: translateY(-1px);
-    text-decoration: none;
-}
-.pub-disclaimer-check img {
+
+#publication-filters {
     margin: 0;
-    vertical-align: middle;
-}
-.pub-loading {
-    color: #888;
 }
 
-#publications-list a:hover section.box.style1 {
-    background-color: #3a6ea5 !important;
-}
-#publications-list a:hover section.box.style1 p {
-    color: white !important;
-    text-shadow: none !important;
-}
-#publications-list a:hover section.box.style1 strong {
-    color: white !important;
-    text-shadow: none !important;
+.pub-authors .me {
+    color: var(--ink);
+    font-weight: 600;
 }
 
-.filter-box .filter-content:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+.pub-venue {
+    font-style: italic;
 }
 
-.filter-box:not(.active) .filter-content {
-    opacity: 0.5;
-    filter: grayscale(100%);
-}
-
-.filter-box:not(.active) .filter-content:hover {
-    opacity: 0.8;
-    filter: grayscale(50%);
-}
-
-/* Add responsive styles */
 @media screen and (max-width: 768px) {
-    /* Hide the publication type boxes on the left */
-    .col-12 > div:first-child {
-        display: none !important;
-    }
-    
-    /* Hide the top filter bar */
-    #publication-filters {
-        display: none !important;
-    }
-    
-    /* Adjust the publication boxes to take full width */
-    .col-12 {
-        padding: 0 !important;
-        margin-bottom: 1em !important;
-    }
-    
-    /* Adjust the box margins */
-    .box.style1 {
-        margin: 0 !important;
-        margin-left: 1em !important;
+    #publications-list .row-aside .badge {
+        display: none;
     }
 }
 </style>
+
+<script>
+(function() {
+    const TYPES = {
+        article:       { icon: 'fa-newspaper',   label: 'Journal',      color: '#3498db' },
+        inproceedings: { icon: 'fa-users',       label: 'Conference',   color: '#27ae60' },
+        incollection:  { icon: 'fa-book-open',   label: 'Book Chapter', color: '#e67e22' },
+        book:          { icon: 'fa-book',        label: 'Book',         color: '#8e44ad' },
+        misc:          { icon: 'fa-file-lines',  label: 'Pre-print',    color: '#c0392b' }
+    };
+    const OTHER = { icon: 'fa-file', label: 'Other', color: '#7f8c8d' };
+    const MY_NAMES = /^(Quim|Joaquim) Motger/;
+
+    const typeInfo = type => TYPES[type] || OTHER;
+    const activeTypes = new Set();
+    let allEntries = [];
+
+    function escapeHtml(value) {
+        return String(value || '').replace(/[&<>"']/g, ch => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[ch]);
+    }
+
+    function hexToTint(hex) {
+        const n = parseInt(hex.slice(1), 16);
+        return `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, 0.11)`;
+    }
+
+    function updateDisclaimer(result) {
+        const text = document.getElementById('publications-disclaimer-text');
+        if (!text) return;
+        if (result.fallback) {
+            text.innerHTML = 'The live sources (dblp, OpenAlex) could not be reached, so an offline snapshot is shown and it may be outdated.';
+        } else if (!result.sources.dblp || !result.sources.openalex) {
+            text.innerHTML += ' <em>(' + (result.sources.dblp ? 'OpenAlex' : 'dblp') + ' is currently unreachable, so the list may be incomplete.)</em>';
+        }
+    }
+
+    function renderFilters(entries) {
+        const counts = {};
+        entries.forEach(e => { counts[e.type] = (counts[e.type] || 0) + 1; });
+        const container = document.getElementById('publication-filters');
+        container.innerHTML = Object.keys(TYPES).concat(Object.keys(counts).filter(t => !TYPES[t]))
+            .filter(type => counts[type])
+            .map(type => {
+                const info = typeInfo(type);
+                activeTypes.add(type);
+                return `<button type="button" class="filter-pill" data-type="${type}" title="Show/hide ${info.label}">
+                            <i class="fas ${info.icon}" style="color: ${info.color};"></i>${info.label}<span class="n">${counts[type]}</span>
+                        </button>`;
+            }).join('');
+
+        container.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const type = pill.dataset.type;
+                if (activeTypes.has(type)) activeTypes.delete(type); else activeTypes.add(type);
+                pill.classList.toggle('off', !activeTypes.has(type));
+                renderList();
+            });
+        });
+    }
+
+    function renderAuthors(authors) {
+        return authors.map(name => MY_NAMES.test(name)
+            ? `<span class="me">${escapeHtml(name)}</span>`
+            : escapeHtml(name)).join(', ');
+    }
+
+    function renderEntry(entry) {
+        const info = typeInfo(entry.type);
+        const tag = entry.url ? 'a' : 'div';
+        const href = entry.url ? ` href="${escapeHtml(entry.url)}" target="_blank" rel="noopener"` : '';
+        return `
+            <${tag} class="row-item"${href}>
+                <div class="row-media" style="background: ${hexToTint(info.color)}; color: ${info.color};" title="${info.label}">
+                    <i class="fas ${info.icon}"></i>
+                </div>
+                <div class="row-body">
+                    <div class="row-title">${escapeHtml(entry.title)}</div>
+                    <p class="row-meta pub-authors">${renderAuthors(entry.authors)}</p>
+                    <p class="row-meta"><span class="pub-venue">${escapeHtml(entry.venue)}</span></p>
+                </div>
+                <div class="row-aside">
+                    <span class="badge" style="background: ${hexToTint(info.color)}; color: ${info.color};">${info.label}</span>
+                    ${entry.url ? '<i class="fas fa-arrow-up-right-from-square row-link-icon"></i>' : ''}
+                </div>
+            </${tag}>`;
+    }
+
+    function renderList() {
+        const container = document.getElementById('publications-list');
+        const query = (document.getElementById('publication-search').value || '').trim().toLowerCase();
+        const visible = allEntries.filter(e => activeTypes.has(e.type) && (!query ||
+            [e.title, e.venue, e.year, e.authors.join(' ')].join(' ').toLowerCase().includes(query)));
+
+        if (!visible.length) {
+            container.innerHTML = '<div class="card"><div class="empty">No publications match the current filters.</div></div>';
+            return;
+        }
+
+        const byYear = {};
+        visible.forEach(e => { (byYear[e.year || 'Unknown'] = byYear[e.year || 'Unknown'] || []).push(e); });
+        container.innerHTML = Object.keys(byYear).sort((a, b) => b - a).map(year => `
+            <h3 class="section-label">${escapeHtml(year)} <span class="count">· ${byYear[year].length}</span></h3>
+            <div class="card">${byYear[year].map(renderEntry).join('')}</div>
+        `).join('');
+    }
+
+    window.PublicationsData.load()
+        .then(result => {
+            if (!result.entries || !result.entries.length) throw new Error('No publications found');
+            allEntries = result.entries;
+            updateDisclaimer(result);
+            document.getElementById('publications-summary').textContent =
+                `${allEntries.length} publications: journal articles, conference papers, book chapters and pre-prints.`;
+            renderFilters(allEntries);
+            renderList();
+            document.getElementById('publication-search').addEventListener('input', renderList);
+        })
+        .catch(error => {
+            console.error('Error loading publications:', error);
+            document.getElementById('publications-list').innerHTML =
+                '<div class="card"><div class="empty">Error loading publications. Please check <a href="https://dblp.org/pid/242/6477.html" target="_blank" rel="noopener">dblp</a> or <a href="https://scholar.google.com/citations?user=_xi50f8AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</div></div>';
+        });
+})();
+</script>

@@ -70,6 +70,18 @@
         "semesters": ["2022-1", "2021-2", "2020-2", "2020-1"]
       }
     ]
+  },
+  {
+    "logo": "images/uoc.png",
+    "title": "Bachelor's Degree in Data Science",
+    "url": "https://www.uoc.edu/es/estudios/grados/grado-data-science",
+    "courses": [
+      {
+        "name": "Object-Oriented Design",
+        "code": "DPOO",
+        "url": "https://estudios.uoc.edu/es/asignaturas-libres/asignatura/informatica-multimedia-telecomunicacion/dise%C3%B1o-programacion-orientada-objeto/presentacion",
+        "semesters": ["2026-1"]
+      }
+    ]
   }
 ]
-

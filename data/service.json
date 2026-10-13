@@ -120,7 +120,7 @@
       "acronym": "RE",
       "year": 2027,
       "roles": ["PC Member"],
-      "tracks": []
+      "tracks": ["Research Track"]
     },
     {
       "name": "IEEE International Requirements Engineering Conference",
@@ -140,14 +140,14 @@
       "name": "International Workshop on Prompt Engineering for Software Engineering",
       "acronym": "PromptSE",
       "year": 2026,
-      "roles": ["Subreviewer"],
+      "roles": ["PC Member"],
       "tracks": ["Workshop Track"]
     },
     {
       "name": "IEEE International Requirements Engineering Conference - Next! Track",
       "acronym": "RE@Next!",
       "year": 2024,
-      "roles": ["Subreviewer"],
+      "roles": ["PC Member"],
       "tracks": ["Next! Track"]
     },
     {
@@ -183,17 +183,50 @@
     }
   ],
   "reviewerJournals": [
-    "IEEE Transactions on Software Engineering (TSE)",
-    "ACM Transactions on Software Engineering and Methodology (TOSEM)",
-    "Requirements Engineering Journal",
-    "Journal of Systems and Software (JSS)",
-    "Information and Software Technology (IST)",
-    "Expert Systems with Applications (ESWA)",
-    "Engineering Applications of Artificial Intelligence",
-    "Empirical Software Engineering (EMSE)",
-    "Data in Brief",
-    "Computing",
-    "Automated Software Engineering (ASE)"
+    {
+      "name": "IEEE Transactions on Software Engineering (TSE)",
+      "url": "https://www.computer.org/csdl/journal/ts"
+    },
+    {
+      "name": "ACM Transactions on Software Engineering and Methodology (TOSEM)",
+      "url": "https://dl.acm.org/journal/tosem"
+    },
+    {
+      "name": "Requirements Engineering Journal",
+      "url": "https://link.springer.com/journal/766"
+    },
+    {
+      "name": "Journal of Systems and Software (JSS)",
+      "url": "https://www.sciencedirect.com/journal/journal-of-systems-and-software"
+    },
+    {
+      "name": "Information and Software Technology (IST)",
+      "url": "https://www.sciencedirect.com/journal/information-and-software-technology"
+    },
+    {
+      "name": "Expert Systems with Applications (ESWA)",
+      "url": "https://www.sciencedirect.com/journal/expert-systems-with-applications"
+    },
+    {
+      "name": "Engineering Applications of Artificial Intelligence",
+      "url": "https://www.sciencedirect.com/journal/engineering-applications-of-artificial-intelligence"
+    },
+    {
+      "name": "Empirical Software Engineering (EMSE)",
+      "url": "https://link.springer.com/journal/10664"
+    },
+    {
+      "name": "Data in Brief",
+      "url": "https://www.sciencedirect.com/journal/data-in-brief"
+    },
+    {
+      "name": "Computing",
+      "url": "https://link.springer.com/journal/607"
+    },
+    {
+      "name": "Automated Software Engineering (ASE)",
+      "url": "https://link.springer.com/journal/10515"
+    }
   ],
   "reviewerConferencesWorkshops": []
 }

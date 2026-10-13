@@ -1,138 +1,86 @@
-<article class="wrapper style2">
-    <div class="container">
-        <header style="text-align: left;">
-            <h2>Research projects</h2>
-        </header>
-        <div class="row aln-center" id="projects-container">
-            <!-- Projects will be dynamically loaded here -->
+<article class="page">
+    <header class="page-head">
+        <div class="page-icon"><i class="fas fa-flask"></i></div>
+        <div class="page-head-text">
+            <h2>Research Projects</h2>
+            <p class="page-lead">European, national (Spanish) and regional (Catalan) research projects.</p>
         </div>
-    </div>
+    </header>
+
+    <h3 class="section-label"><i class="fas fa-circle-play"></i>Ongoing</h3>
+    <div class="grid cols-2" id="projects-current"></div>
+
+    <h3 class="section-label"><i class="fas fa-clock-rotate-left"></i>Past</h3>
+    <div class="grid cols-2" id="projects-past"></div>
 </article>
 
 <style>
-    @media screen and (max-width: 768px) {
-        .col-12 {
-            flex-direction: column !important;
-            align-items: stretch !important;
-            background: white !important;
-            border: 1px solid rgba(58, 110, 165, 0.1) !important;
-            border-radius: 12px !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03) !important;
-            padding: 1.2em 1.2em 1.2em 1.2em !important;
-            margin-bottom: 2em !important;
-            margin-left: 24px !important;
-            margin-right: 8px !important;
-        }
-        .university-logo {
-            width: 100% !important;
-            margin-bottom: 0 !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            padding: 0 !important;
-            box-sizing: border-box !important;
-        }
-        .university-logo > div {
-            width: 100% !important;
-            max-width: 350px !important;
-            height: auto !important;
-            margin: 0 auto !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            background: none !important;
-            border: none !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-        }
-        .university-logo img {
-            max-height: 80px !important;
-            width: auto !important;
-            height: auto !important;
-        }
-        .box.style1 {
-            margin: 0 !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            border-radius: 0 !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-            background: white !important;
-        }
-        header[style] {
-            margin-left: 8px !important;
-            margin-right: 8px !important;
-        }
-        .container {
-            padding-left: 8px !important;
-            padding-right: 8px !important;
-        }
-    }
+.project-tile {
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.project-head .row-media {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+}
+
+.project-head .row-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.project-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.5;
+}
 </style>
 
 <script>
-    // Function to create a project card
-    function createProjectCard(project) {
-        const cardDiv = document.createElement('div');
-        cardDiv.className = 'col-12';
-        cardDiv.style.cssText = 'display: flex; align-items: center;';
-        
-        cardDiv.innerHTML = `
-            <div class="university-logo" style="width: 300px; height: 100%; display: flex; justify-content: center; align-items: center;">
-                <div style="width: 280px; height: 100%; background: white; padding: 10px; border-radius: 8px; border: 1px solid rgba(58, 110, 165, 0.2); display: flex; justify-content: center; align-items: center;">
-                    <img src="${project.image}" style="max-height: 120px; max-width: 100%; width: auto; height: auto; object-fit: contain;">
-                </div>
-            </div>
-            <a href="${project.url}" style="text-decoration: none; flex: 1;">
-                <section class="box style1" style="text-align: left; padding: 1.5em; transition: all 0.3s ease; cursor: pointer; background: #f8f8f8;" onmouseover="this.style.background='#3a6ea5'; this.querySelector('h4').style.color='white'; this.querySelector('p').style.color='white'; this.querySelector('span').style.background='rgba(255,255,255,0.2)'; this.querySelector('span').style.color='white'; this.querySelector('h4').style.textShadow='none'; this.querySelector('p').style.textShadow='none';" onmouseout="this.style.background='#f8f8f8'; this.querySelector('h4').style.color='#1a1a1a'; this.querySelector('p').style.color='#333'; this.querySelector('span').style.background='rgba(58, 110, 165, 0.1)'; this.querySelector('span').style.color='#666';">
-                    <div>
-                        <h4 style="margin: 0 0 0.3em 0; color: #1a1a1a; position: relative;">
-                            <span style="position: absolute; right: 0; top: 0; font-weight: 520; background: rgba(58, 110, 165, 0.1); color: #666; padding: 0.2em 0.6em; border-radius: 12px; font-size: 0.9em; text-shadow: none;">${project.dateRange}</span>
-                            ${project.title}
-                        </h4>
-                        <p style="margin: 0; color: #333;">${project.description}</p>
+(function() {
+    function createProjectTile(project, ongoing) {
+        return `
+            <a class="tile project-tile" href="${project.url}" target="_blank" rel="noopener">
+                <div class="project-head">
+                    <div class="row-media logo"><img src="${project.image}" alt=""></div>
+                    <div class="row-body">
+                        <span class="row-title">${project.title}</span>
+                        <span class="badge ${ongoing ? 'success' : ''}">${project.dateRange}</span>
                     </div>
-                </section>
+                </div>
+                <p class="project-desc">${project.description}</p>
             </a>
         `;
-        
-        return cardDiv;
     }
-    
-    // Load projects from JSON and render them
-    async function loadProjects() {
-        try {
-            const response = await fetch('../data/projects.json');
-            if (!response.ok) {
-                throw new Error('Failed to load projects data');
-            }
-            const projects = await response.json();
-            const container = document.getElementById('projects-container');
-            
-            // Clear container
-            container.innerHTML = '';
-            
-            // Create and append each project card
-            projects.forEach(project => {
-                const card = createProjectCard(project);
-                container.appendChild(card);
-            });
-        } catch (error) {
+
+    fetch('data/projects.json')
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to load projects data');
+            return response.json();
+        })
+        .then(projects => {
+            const currentYear = new Date().getFullYear();
+            const isOngoing = p => parseInt(p.dateRange.split('-').pop(), 10) >= currentYear;
+            document.getElementById('projects-current').innerHTML =
+                projects.filter(isOngoing).map(p => createProjectTile(p, true)).join('') ||
+                '<div class="empty">No ongoing projects.</div>';
+            document.getElementById('projects-past').innerHTML =
+                projects.filter(p => !isOngoing(p)).map(p => createProjectTile(p, false)).join('');
+        })
+        .catch(error => {
             console.error('Error loading projects:', error);
-            const container = document.getElementById('projects-container');
-            container.innerHTML = '<p style="color: red; padding: 2em;">Error loading projects. Please try again later.</p>';
-        }
-    }
-    
-    // Load projects immediately (for dynamic page loading)
-    // Also listen for DOMContentLoaded as a fallback
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadProjects);
-    } else {
-        // DOM already loaded, call immediately
-        loadProjects();
-    }
+            document.getElementById('projects-current').innerHTML = '<div class="empty">Error loading projects. Please try again later.</div>';
+        });
+})();
 </script>
