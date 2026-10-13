@@ -87,18 +87,11 @@
 </style>
 
 <script>
-    // Function to count publications from bibliography.bib
+    // Function to count publications from the live bibliographic sources (dblp, OpenAlex)
     async function countPublications() {
         try {
-            const response = await fetch('../data/bibliography.bib');
-            if (!response.ok) {
-                throw new Error('Failed to load bibliography');
-            }
-            const bibtex = await response.text();
-            // Count entries by counting lines that start with @
-            const entries = bibtex.match(/^@\w+/gm);
-            const count = entries ? entries.length : 0;
-            document.getElementById('publications-count').textContent = count;
+            const result = await window.PublicationsData.load();
+            document.getElementById('publications-count').textContent = result.entries.length;
         } catch (error) {
             console.error('Error counting publications:', error);
             document.getElementById('publications-count').textContent = '20+';

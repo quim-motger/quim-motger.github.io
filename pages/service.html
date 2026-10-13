@@ -9,14 +9,20 @@
 </article>
 
 <script>
-    function renderServiceSection(title, itemsHtml) {
+    function renderServiceSection(title, icon, itemsHtml) {
+        const count = (itemsHtml.match(/<li>/g) || []).length;
         return `
-            <div class="service-section">
-                <h3>${title}</h3>
+            <details class="service-section">
+                <summary>
+                    <i class="fas ${icon} service-icon"></i>
+                    <span class="service-title">${title}</span>
+                    <span class="service-count">${count}</span>
+                    <i class="fas fa-chevron-down service-chevron"></i>
+                </summary>
                 <ul>
                     ${itemsHtml}
                 </ul>
-            </div>
+            </details>
         `;
     }
 
@@ -43,6 +49,20 @@
             .map(item => `<li>${item.role_html}. ${item.event}.</li>`)
             .join('');
 
+        const phdStudentItems = (data.phdStudents || [])
+            .map(item => {
+                const institution = item.institution ? ` (${item.institution})` : '';
+                const programName = item.program_url
+                    ? `<a href="${item.program_url}" target="_blank" rel="noopener">${item.program}</a>`
+                    : item.program;
+                const program = item.program ? ` - ${programName}` : '';
+                const linkedin = item.url
+                    ? ` <a href="${item.url}" target="_blank" rel="noopener" class="service-linkedin" title="LinkedIn" aria-label="${item.name} on LinkedIn"><i class="fab fa-linkedin"></i></a>`
+                    : '';
+                return `<li><strong>${item.name}</strong>${institution}${program}.${linkedin}</li>`;
+            })
+            .join('');
+
         const studentItems = data.students
             .map(item => {
                 const institution = item.institution ? ` (${item.institution})` : '';
@@ -60,19 +80,21 @@
             .map(item => {
                 const tracks = (item.tracks || []).join('; ');
                 const roles = (item.roles || []).join(', ');
-                return `<li>${item.name} (${item.acronym}), ${item.year}. Roles: ${roles}. Tracks: ${tracks}.</li>`;
+                return `<li>${item.name} (${item.acronym}), ${item.year}. Roles: ${roles}.${tracks ? ` Tracks: ${tracks}.` : ''}</li>`;
             })
             .join('');
 
-        const journalItems = data.reviewerJournals
-            .map(item => `<li>${item}.</li>`)
+        const journalItems = (data.journalEditorialRoles || [])
+            .map(item => `<li>${item.role_html}. ${item.journal}.</li>`)
+            .concat(data.reviewerJournals.map(item => `<li><strong>Reviewer</strong>. ${item}.</li>`))
             .join('');
 
         container.innerHTML = [
-            renderServiceSection('Organizing Committee Membership', ocItems),
-            renderServiceSection('Students Supervised / Co-Supervised', studentItems),
-            renderServiceSection('Program Committee and Reviewer - Conferences and Workshops', conferenceWorkshopItems),
-            renderServiceSection('Reviewer - Journals', journalItems),
+            renderServiceSection('Organizing Committee Membership', 'fa-sitemap', ocItems),
+            renderServiceSection('Program Committee and Reviewer - Conferences and Workshops', 'fa-clipboard-check', conferenceWorkshopItems),
+            renderServiceSection('Editorial Service and Reviewer - Journals', 'fa-newspaper', journalItems),
+            renderServiceSection('PhD Students', 'fa-user-graduate', phdStudentItems),
+            renderServiceSection('Undergraduate Students', 'fa-graduation-cap', studentItems),
         ].join('');
     }
 
@@ -106,16 +128,83 @@
         background: #fff;
         border: 1px solid rgba(58, 110, 165, 0.15);
         border-radius: 10px;
-        padding: 1.25em 1.4em;
-        margin: 0 0 1.2em 0;
+        padding: 1em 1.4em;
+        margin: 0 0 1em 0;
         text-align: left;
     }
 
-    .service-section h3 {
-        margin: 0 0 0.6em 0;
+    .service-linkedin {
+        color: #0a66c2;
+        border-bottom: none;
+        text-decoration: none;
+        margin-left: 0.2em;
+    }
+
+    .service-linkedin:hover {
+        opacity: 0.75;
+    }
+
+    .service-section summary {
+        display: flex;
+        align-items: center;
+        gap: 0.8em;
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+    }
+
+    .service-section summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .service-icon {
+        width: 2.2em;
+        height: 2.2em;
+        flex: 0 0 2.2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(58, 110, 165, 0.1);
         color: #3a6ea5;
+        font-size: 1em;
+    }
+
+    .service-title {
+        flex: 1;
+        color: #3a6ea5;
+        font-weight: bold;
+        font-size: 1.1em;
+        line-height: 1.3;
+    }
+
+    .service-count {
+        min-width: 1.8em;
+        padding: 0.1em 0.6em;
+        border-radius: 1em;
+        background: #f0f3f7;
+        color: #666;
+        font-size: 0.85em;
+        text-align: center;
+    }
+
+    .service-chevron {
+        color: #999;
+        transition: transform 0.25s ease;
+    }
+
+    .service-section[open] .service-chevron {
+        transform: rotate(180deg);
+    }
+
+    .service-section summary:hover .service-title {
+        text-decoration: underline;
+    }
+
+    .service-section[open] summary {
         border-bottom: 1px solid #e5e5e5;
-        padding-bottom: 0.35em;
+        padding-bottom: 0.8em;
+        margin-bottom: 0.8em;
     }
 
     .service-section ul {

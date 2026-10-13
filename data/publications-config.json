@@ -1,0 +1,29 @@
+{
+  "profiles": {
+    "dblp": "242/6477",
+    "openalex": "A5060562561",
+    "orcid": "0000-0002-4896-7515",
+    "scholar": "_xi50f8AAAAJ"
+  },
+  "exclude": {
+    "types": ["phdthesis", "mastersthesis", "proceedings"],
+    "titlePatterns": ["^Preface\\b", "^Editorial\\b"],
+    "ids": [
+      "dblp:conf/re/GhavanatiMF25",
+      "dblp:journals/corr/abs-2106-10901",
+      "dblp:journals/corr/abs-2401-12075"
+    ]
+  },
+  "overrides": {
+    "doi:10.63744/tdbqckiqa3fi": {
+      "type": "inproceedings",
+      "venue": "Anthology of Computers and the Humanities, volume 3"
+    },
+    "doi:10.5753/cibse.2026.42469": {
+      "venue": "Anais do XXIX Congresso Ibero-Americano em Engenharia de Software"
+    },
+    "doi:10.1007/978-3-031-73143-3_7": {
+      "venue": "Handbook on Natural Language Processing for Requirements Engineering"
+    }
+  }
+}

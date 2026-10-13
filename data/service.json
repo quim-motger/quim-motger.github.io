@@ -7,6 +7,11 @@
     },
     {
       "year": 2026,
+      "role_html": "<strong>Steering Committee Member</strong>",
+      "event": "Artificial Intelligence and Requirements Engineering Workshop (AIRE), co-located with the IEEE International Requirements Engineering Conference (RE)"
+    },
+    {
+      "year": 2026,
       "role_html": "<strong>Organizing Committee</strong>",
       "event": "Artificial Intelligence and Requirements Engineering Workshop (AIRE 2026), co-located with the IEEE International Requirements Engineering Conference (RE 2026)"
     },
@@ -56,42 +61,30 @@
       "event": "16th International Conference on Research Challenges in Information Science (RCIS 2022)"
     }
   ],
+  "phdStudents": [
+    {
+      "name": "Sadaf Anwar",
+      "url": "https://www.linkedin.com/in/sadaf-anwar-2b5432b4/",
+      "institution": "Universitat Politècnica de Catalunya",
+      "program": "Computing PhD Program",
+      "program_url": "https://computing.phd.upc.edu/en"
+    },
+    {
+      "name": "Carlota Catot",
+      "url": "https://www.linkedin.com/in/carlotacb/",
+      "institution": "Universitat Politècnica de Catalunya",
+      "program": "Computing PhD Program",
+      "program_url": "https://computing.phd.upc.edu/en"
+    },
+    {
+      "name": "Alberto León",
+      "url": "https://www.linkedin.com/in/alberto-le%C3%B3n-ruiz-roso/",
+      "institution": "Universitat Politècnica de Catalunya",
+      "program": "Computing PhD Program",
+      "program_url": "https://computing.phd.upc.edu/en"
+    }
+  ],
   "students": [
-    {
-      "name": "Rafael Ibanez Rodriguez",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2025-2026",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Gerard Galindo Gispert",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2025-2026",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Sergi Alonso Morillas",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2025-2026",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Laia Belaustegui Colilaf",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2025-2026",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Aina Gomez Pinyol",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2025-2026",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
     {
       "name": "Matthieu Kollen",
       "institution": "Bordeaux INP",
@@ -100,66 +93,10 @@
       "supervision": "Supervisor"
     },
     {
-      "name": "Anyer Moreno Alcaraz",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2024-2025",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
       "name": "Max Tiessler",
       "institution": "Universitat Politècnica de Catalunya",
       "academic_course": "2024-2025",
       "type": "Learning agreement student (research internship)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Leandra Kateey Moonsammy",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2023-2024",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Joel Macias Rojas",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2023-2024",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Lucas Ares Perez",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2023-2024",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Darko Iglesias Allasio",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2023-2024",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Irene Bertolin Rico",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2023-2024",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Co-supervisor"
-    },
-    {
-      "name": "Daniel Pulido Galvez",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2022-2023",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Supervisor"
-    },
-    {
-      "name": "Raul Lozano Garcia",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2022-2023",
-      "type": "Final Thesis (BSc/MSc)",
       "supervision": "Supervisor"
     },
     {
@@ -175,16 +112,16 @@
       "academic_course": "2022-2023",
       "type": "Learning agreement student (research internship)",
       "supervision": "Supervisor"
-    },
-    {
-      "name": "Bran Rodriguez Castro",
-      "institution": "Universitat Politècnica de Catalunya",
-      "academic_course": "2021-2022",
-      "type": "Final Thesis (BSc/MSc)",
-      "supervision": "Co-supervisor"
     }
   ],
   "conferenceWorkshopService": [
+    {
+      "name": "IEEE International Requirements Engineering Conference",
+      "acronym": "RE",
+      "year": 2027,
+      "roles": ["PC Member"],
+      "tracks": []
+    },
     {
       "name": "IEEE International Requirements Engineering Conference",
       "acronym": "RE",
@@ -233,6 +170,16 @@
       "year": 2024,
       "roles": ["Subreviewer"],
       "tracks": ["Conference Track"]
+    }
+  ],
+  "journalEditorialRoles": [
+    {
+      "role_html": "<strong>Publicity Chair</strong>",
+      "journal": "Requirements Engineering Journal (REJ)"
+    },
+    {
+      "role_html": "<strong>Associate Editor</strong>",
+      "journal": "Requirements Engineering Journal (REJ), Special Issue <a href=\"https://link.springer.com/collections/deebijccbh\" target=\"_blank\" rel=\"noopener\">Rethinking Requirements Engineering in the Age of Large Language Models</a>"
     }
   ],
   "reviewerJournals": [
