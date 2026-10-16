@@ -112,7 +112,7 @@
                 ? `<a href="${entry.url}" target="_blank" rel="noopener" class="service-linkedin" title="LinkedIn" aria-label="${entry.name} on LinkedIn"><i class="fab fa-linkedin"></i></a>`
                 : '';
             const details = [entry.institution, programName].filter(Boolean).join(' · ');
-            return item(`<strong>${entry.name}</strong>${linkedin}`, details);
+            return item(`<strong>${entry.name}</strong>${linkedin}`, details, entry.years);
         });
 
         const studentItems = data.students.map(entry => item(
