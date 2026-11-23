@@ -17,7 +17,7 @@
     const FALLBACK_URL = 'data/bibliography.bib';
     const DBLP_SPARQL = 'https://sparql.dblp.org/sparql';
     const OPENALEX_API = 'https://api.openalex.org/works';
-    const CACHE_KEY = 'publications-cache-v3';
+    const CACHE_KEY = 'publications-cache-v4';
     const CACHE_TTL_MS = 12 * 60 * 60 * 1000;
     const TYPE_ORDER = ['article', 'inproceedings', 'incollection', 'book', 'column', 'misc'];
 
@@ -161,7 +161,7 @@ GROUP BY ?p`;
 
     function loadOpenAlex(authorId) {
         const url = `${OPENALEX_API}?filter=author.id:${authorId}&per_page=200` +
-            '&select=id,doi,title,publication_year,type,authorships,primary_location';
+            '&select=id,doi,title,publication_year,publication_date,type,authorships,primary_location';
         return fetchJson(url).then(data => data.results.map(work => {
             const location = work.primary_location || {};
             const source = location.source || {};
@@ -182,6 +182,7 @@ GROUP BY ?p`;
                 authors: (work.authorships || []).map(a => rawAuthorName(a.raw_author_name) || (a.author && a.author.display_name)),
                 venue: isArxiv ? 'arXiv' : (source.display_name || ''),
                 year: String(work.publication_year || ''),
+                date: work.publication_date || '',
                 doi,
                 url: doi ? `https://doi.org/${doi}` : (location.landing_page_url || ''),
                 source: 'openalex'
@@ -266,6 +267,14 @@ GROUP BY ?p`;
         const published = entries.filter(e => e.type !== 'misc');
         entries = entries.filter(e => e.type !== 'misc' || !published.some(p => similarTitles(p.title, e.title)));
 
+        // dblp only provides the year: borrow the full publication date from OpenAlex (matched by DOI or title)
+        entries = entries.map(e => {
+            if (e.date) return e;
+            const match = openAlexEntries.find(w => w.date && w.year === e.year &&
+                ((e.doi && w.doi === e.doi) || similarTitles(w.title, e.title)));
+            return match ? Object.assign({}, e, { date: match.date }) : e;
+        });
+
         // Add OpenAlex works that dblp does not know about
         const knownDois = new Set(dblpEntries.map(e => e.doi).filter(Boolean));
         openAlexEntries.forEach(work => {
@@ -282,6 +291,7 @@ GROUP BY ?p`;
     function sortEntries(entries) {
         return entries.sort((a, b) =>
             (Number(b.year) || 0) - (Number(a.year) || 0) ||
+            (b.date || '').localeCompare(a.date || '') ||
             TYPE_ORDER.indexOf(a.type) - TYPE_ORDER.indexOf(b.type) ||
             a.title.localeCompare(b.title));
     }
