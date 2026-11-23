@@ -3,7 +3,7 @@
         <div class="page-icon"><i class="fas fa-book"></i></div>
         <div class="page-head-text">
             <h2>Publications</h2>
-            <p class="page-lead" id="publications-summary">Journal articles, conference papers, book chapters and pre-prints.</p>
+            <p class="page-lead" id="publications-summary">Journal articles, conference papers, book chapters, columns and pre-prints.</p>
         </div>
     </header>
 
@@ -74,6 +74,7 @@
         inproceedings: { icon: 'fa-users',       label: 'Conference',   color: '#27ae60' },
         incollection:  { icon: 'fa-book-open',   label: 'Book Chapter', color: '#e67e22' },
         book:          { icon: 'fa-book',        label: 'Book',         color: '#8e44ad' },
+        column:        { icon: 'fa-pen-nib',     label: 'Column',       color: '#d4a017' },
         misc:          { icon: 'fa-file-lines',  label: 'Pre-print',    color: '#c0392b' }
     };
     const OTHER = { icon: 'fa-file', label: 'Other', color: '#7f8c8d' };
@@ -180,7 +181,7 @@
             allEntries = result.entries;
             updateDisclaimer(result);
             document.getElementById('publications-summary').textContent =
-                `${allEntries.length} publications: journal articles, conference papers, book chapters and pre-prints.`;
+                `${allEntries.length} publications: journal articles, conference papers, book chapters, columns and pre-prints.`;
             renderFilters(allEntries);
             renderList();
             document.getElementById('publication-search').addEventListener('input', renderList);

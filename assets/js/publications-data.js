@@ -10,16 +10,16 @@
  * Usage: PublicationsData.load().then(result => ...)
  *   result = { entries: [...], sources: { dblp, openalex }, fallback, profiles }
  *   entry  = { id, type, title, authors: [..], venue, year, url, doi, source }
- *   type   ∈ article | inproceedings | incollection | book | misc (pre-print)
+ *   type   ∈ article | inproceedings | incollection | book | column | misc (pre-print)
  */
 (function () {
     const CONFIG_URL = 'data/publications-config.json';
     const FALLBACK_URL = 'data/bibliography.bib';
     const DBLP_SPARQL = 'https://sparql.dblp.org/sparql';
     const OPENALEX_API = 'https://api.openalex.org/works';
-    const CACHE_KEY = 'publications-cache-v2';
+    const CACHE_KEY = 'publications-cache-v3';
     const CACHE_TTL_MS = 12 * 60 * 60 * 1000;
-    const TYPE_ORDER = ['article', 'inproceedings', 'incollection', 'book', 'misc'];
+    const TYPE_ORDER = ['article', 'inproceedings', 'incollection', 'book', 'column', 'misc'];
 
     let pending = null;
 
@@ -242,9 +242,19 @@ GROUP BY ?p`;
         return (exclude.titlePatterns || []).some(p => new RegExp(p, 'i').test(entry.title));
     }
 
+    // Magazine columns (IEEE Software, ACM SIGSOFT SEN) are listed apart from journal articles
+    const COLUMN_VENUES = /^(IEEE Softw(are|\.)?|.*SIGSOFT.*)$/i;
+
+    function classifyColumn(entry) {
+        const venue = (entry.venue || '').replace(/[{}]/g, '').trim();
+        return entry.type === 'article' && COLUMN_VENUES.test(venue)
+            ? Object.assign({}, entry, { type: 'column' })
+            : entry;
+    }
+
     function applyOverrides(entry, overrides) {
         const patch = overrides[entry.id] || (entry.doi && overrides['doi:' + entry.doi]);
-        return patch ? Object.assign({}, entry, patch) : entry;
+        return classifyColumn(patch ? Object.assign({}, entry, patch) : entry);
     }
 
     function merge(dblpEntries, openAlexEntries, config) {
@@ -299,7 +309,7 @@ GROUP BY ?p`;
                 return Promise.all(sources).then(([dblp, openalex]) => {
                     if (!dblp && !openalex) {
                         return loadFallbackBib().then(entries => ({
-                            entries: sortEntries(entries),
+                            entries: sortEntries(entries.map(classifyColumn)),
                             sources: { dblp: false, openalex: false },
                             fallback: true,
                             profiles
